@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace POS.Services
+namespace POS.Data
 {
     public class Customer
     {
         [Key]
-        public int CustomerId { get; set; } 
+        public int CustomerId { get; set; }
 
         public string Name { get; set; }
 
@@ -21,6 +21,5 @@ namespace POS.Services
 
         [DataType(DataType.PhoneNumber)]
         public object PhoneNumber { get; set; }
-
     }
 }
