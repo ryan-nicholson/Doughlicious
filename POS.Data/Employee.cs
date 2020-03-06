@@ -8,14 +8,11 @@ using System.Threading.Tasks;
 
 namespace POS.Services
 {
-    public class Employee:ApplicationUser
+    public class Employee:ApplicationUser //see POS.WebAPI/Models/AccountBindingModels
     {
         [Key]
         public int EmployeeId { get; set; }
 
-        public Guid GlobalId { get; }
-
-        public string Name { get; set; }
 
     }
 }
