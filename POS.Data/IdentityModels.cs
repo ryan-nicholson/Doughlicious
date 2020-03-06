@@ -1,8 +1,10 @@
-﻿using System.Security.Claims;
+﻿using System.Data.Entity;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
+using POS.Services;
 
 namespace POS.Data
 {
@@ -29,5 +31,9 @@ namespace POS.Data
         {
             return new ApplicationDbContext();
         }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Pizza> Pizzas { get; set; }
     }
 }
