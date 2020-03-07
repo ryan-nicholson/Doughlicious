@@ -5,14 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace POS.Data
+namespace POS.Services
 {
     public class Pizza
     {
-        public enum CrustType { pan }
-        public enum ToppingType { pepperoni }
-        public enum SauceType { red }
-        public enum SizeType { XXL }
+        public enum CrustType { pan}
+        public enum ToppingType { pepperoni}
+        public enum SauceType { red}
+        public enum SizeType { XXL}
 
         [Key]
         public int PizzaId { get; set; }
@@ -38,5 +38,4 @@ namespace POS.Data
         public string Comment { get; set; }//We need to set default value to ""
 
     }
-
 }

@@ -5,13 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace POS.Data
+namespace POS.Models
 {
-    public class Customer
+    public class CustomerCreate
     {
-        [Key]
-        public int CustomerId { get; set; }
-
         public string Name { get; set; }
 
         [DataType(DataType.EmailAddress)]
