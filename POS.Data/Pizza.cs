@@ -16,6 +16,9 @@ namespace POS.Data
 
         [Key]
         public int PizzaId { get; set; }
+        public Guid EmployeeId { get; set; }
+        public int CustomerId { get; set; }
+        public int OrderId { get; set; }
 
         public bool Cheese { get; set; }
 
