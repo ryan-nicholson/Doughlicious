@@ -1,12 +1,29 @@
-﻿using System;
+﻿using POS.Data;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace POS.Services.Pizza.Model
+namespace POS.Models.PizzaModels
 {
-    class PizzaCreate
+    public class PizzaCreate
     {
+        [Key]
+        public int PizzaId { get; set; }
+        public Pizza.CrustType TypeOfCrust { get; set; }
+        public Pizza.SauceType TypeOFSauce { get; set; }
+        public Pizza.SizeType TypeOfSize { get; set; }
+        public Pizza.ToppingType TypeOfToppingOne { get; set; }
+        public Pizza.ToppingType TypeOfToppingTwo { get; set; }
+        public Pizza.ToppingType TypeOfToppingThree { get; set; }
+        public Pizza.ToppingType TypeOfToppingFour { get; set; }
+        public Pizza.ToppingType TypeOfToppingFive { get; set; }
+        public bool Cheese { get; set; }
+        public string Comment { get; set; }
+        public int CustomerId { get; set; }
+        public Guid EmployeeId { get; set; }
+        public int OrderId { get; set; }
     }
 }
