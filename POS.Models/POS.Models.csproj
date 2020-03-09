@@ -75,9 +75,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+
+    <Compile Include="OrderModels\OrderCreate.cs" />
+    <Compile Include="OrderModels\OrderListItem.cs" />
     <Compile Include="CustomerModels\CustomerCreate.cs" />
     <Compile Include="CustomerModels\CustomerListItem.cs" />
+
     <Compile Include="PizzaModel.cs" />
+    <Compile Include="PizzaModels\PizzaCreate.cs" />
+    <Compile Include="PizzaModels\PizzaListItem.cs" />
+
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -178,6 +185,12 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\POS.Data\POS.Data.csproj">
+      <Project>{6D821AD0-943C-43AC-B404-3C3DFFF60A96}</Project>
+      <Name>POS.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
