@@ -10,9 +10,9 @@ namespace POS.Services
 {
     public class PizzaService
     {
-        private readonly Guid _userId;
+        private readonly int _userId;
 
-        public PizzaService(Guid userId)
+        public PizzaService(int userId)
         {
             _userId = userId;
         }

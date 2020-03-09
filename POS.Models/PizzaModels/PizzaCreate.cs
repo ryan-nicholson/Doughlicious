@@ -23,7 +23,7 @@ namespace POS.Models.PizzaModels
         public bool Cheese { get; set; }
         public string Comment { get; set; }
         public int CustomerId { get; set; }
-        public Guid EmployeeId { get; set; }
+        public int EmployeeId { get; set; }
         public int OrderId { get; set; }
     }
 }
