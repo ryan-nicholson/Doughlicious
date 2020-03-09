@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace POS.Services
+namespace POS.Data
 {
     public class Customer
     {
@@ -21,6 +22,9 @@ namespace POS.Services
 
         [DataType(DataType.PhoneNumber)]
         public object PhoneNumber { get; set; }
+
+        [ForeignKey(nameof(CustomerOrderCollection))]
+        public ICollection<Order> CustomerOrderCollection { get; set; }
 
     }
 }
