@@ -37,3 +37,4 @@ namespace POS.Data
         public double Price { get; set; }
     }
 }
+

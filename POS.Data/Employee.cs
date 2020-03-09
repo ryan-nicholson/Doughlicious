@@ -13,10 +13,8 @@ namespace POS.Data
         [Key]
         public int EmployeeId { get; set; }
 
-
         [ForeignKey(nameof(EmployeeOrderCollection))]
         public ICollection<Order> EmployeeOrderCollection { get; set; }
-
 
     }
 }

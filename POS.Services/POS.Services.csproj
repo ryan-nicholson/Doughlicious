@@ -76,7 +76,11 @@
   </ItemGroup>
   <ItemGroup>
 
+
     <Compile Include="OrderService.cs" />
+
+    <Compile Include="CustomerService.cs" />
+
     <Compile Include="PizzaServices.cs" />
     <Compile Include="PizzaService.cs" />
 
@@ -195,6 +199,7 @@
     </ProjectReference>
     <ProjectReference Include="..\POS.Models\POS.Models.csproj">
       <Project>{b18efa01-a2b2-4654-961d-61a9ee50a1fc}</Project>
+
 
       <Name>POS.Models</Name>
     </ProjectReference>
