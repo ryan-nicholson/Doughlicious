@@ -11,7 +11,7 @@ namespace POS.Data
     {
         [Key]
         public int EmployeeId { get; set; } //EAC: a table of only one (this) property seems strange
-
+        public Guid UserId { get; set; }
 
     }
 }
