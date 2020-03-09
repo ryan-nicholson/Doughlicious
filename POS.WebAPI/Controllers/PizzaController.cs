@@ -23,7 +23,7 @@ namespace POS.WebAPI.Controllers
         }
         private PizzaService CreatePizzaService(Employee employee)
         {
-            var userId = employee.EmployeeId; //Guid.Parse(User.Identity.GetUserId());
+            var userId = employee.Id; //Guid.Parse(User.Identity.GetUserId());
             PizzaService pizzaService = new PizzaService(userId);
             return pizzaService;
         }

@@ -54,7 +54,7 @@ namespace POS.Services
                             e =>
                                 new EmployeeListItem
                                 {
-                                    EmployeeId = e.EmployeeId,
+                                    Id = e.Id
 
                                     //CreatedUtc = e.CreatedUtc //EAC: Ctrl. suggested fix was to add public DateTimeOffset CreatedUtc { get; set;} to POS.Data/Employee.cs
                                     }

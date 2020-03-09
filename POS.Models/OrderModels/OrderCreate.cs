@@ -10,7 +10,6 @@ namespace POS.Models.OrderModels
     public class OrderCreate
     {
         public int CustomerId { get; set; }
-        public int PizzaId { get; set; }
         public bool Delivery { get; set; }
         public double Price { get; set; }
 

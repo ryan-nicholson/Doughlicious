@@ -11,8 +11,8 @@ namespace POS.Data
 
     public class Employee : ApplicationUser //see POS.WebAPI/Models/AccountBindingModels
     {
-        [Key]
-        public int EmployeeId { get; set; }
+        //[Key]
+        //public int EmployeeId { get; set; }
         public Guid UserId { get; set; }
         [ForeignKey(nameof(EmployeeOrderCollection))]
         public ICollection<Order> EmployeeOrderCollection { get; set; }

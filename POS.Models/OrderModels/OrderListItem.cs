@@ -13,7 +13,7 @@ namespace POS.Models.OrderModels
         public bool Pending { get; set; }
         public DateTime OrderTime { get; set; }
 
-        public ICollection<Pizza> PizzaCollection { get; set; }
+        //public ICollection<Pizza>  PizzaCollection { get; set; }
 
     }
 }

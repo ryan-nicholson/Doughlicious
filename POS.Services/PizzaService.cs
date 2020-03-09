@@ -10,12 +10,18 @@ namespace POS.Services
 {
     public class PizzaService
     {
-        private readonly int _userId;
+        private readonly string _userId;
 
-        public PizzaService(int userId)
+        //private readonly int _userId;
+
+        public PizzaService(string userId)
         {
             _userId = userId;
         }
+        //public PizzaService(int userId)
+        //{
+        //    _userId = userId;
+        //}
         public bool CreatePizza(PizzaCreate model)
         {
             var entity =
