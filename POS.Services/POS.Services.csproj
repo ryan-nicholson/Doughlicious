@@ -75,16 +75,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-
     <Compile Include="EmployeeService.cs" />
-
     <Compile Include="OrderService.cs" />
-
     <Compile Include="CustomerService.cs" />
-
-    <Compile Include="PizzaServices.cs" />
     <Compile Include="PizzaService.cs" />
-
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -188,19 +182,16 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\POS.Data\POS.Data.csproj">
-
       <Project>{6D821AD0-943C-43AC-B404-3C3DFFF60A96}</Project>
       <Name>POS.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\POS.Models\POS.Models.csproj">
       <Project>{B18EFA01-A2B2-4654-961D-61A9EE50A1FC}</Project>
-
       <Project>{6d821ad0-943c-43ac-b404-3c3dfff60a96}</Project>
       <Name>POS.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\POS.Models\POS.Models.csproj">
       <Project>{b18efa01-a2b2-4654-961d-61a9ee50a1fc}</Project>
-
       <Name>POS.Models</Name>
     </ProjectReference>
   </ItemGroup>

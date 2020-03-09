@@ -95,7 +95,6 @@
     <Compile Include="IdentityModels.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Pizza.cs" />
-    <Compile Include="Pizza1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
