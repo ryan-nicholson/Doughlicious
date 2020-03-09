@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +18,14 @@ namespace POS.Data
 
         [Key]
         public int PizzaId { get; set; }
+
+        [ForeignKey(nameof(Order))]
+        public int OrderId { get; set; }
+        public Order Order { get; set; }
+
+
+        public Guid EmployeeId { get; set; }
+        public int CustomerId { get; set; }
 
         public bool Cheese { get; set; }
 
@@ -36,5 +46,8 @@ namespace POS.Data
         public ToppingType? TypeOfToppingFive { get; set; }
 
         public string Comment { get; set; }//We need to set default value to ""
+
     }
+   
+
 }

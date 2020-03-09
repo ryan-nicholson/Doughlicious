@@ -23,10 +23,8 @@ namespace POS.Data
 
         public virtual Employee Employee { get; set; }
 
-        [ForeignKey(nameof(Pizza))]
-        public int PizzaId { get; set; }
-
-        public virtual Pizza Pizza { get; set; }
+        [ForeignKey(nameof(PizzaCollection))]
+        public ICollection<Pizza> PizzaCollection { get; set; }
 
         public bool Delivery { get; set; }
 
