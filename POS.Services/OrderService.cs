@@ -24,7 +24,7 @@ namespace POS.Services
             {
                 EmployeeId = _employeeId,
                 CustomerId = model.CustomerId,
-                PizzaId = model.PizzaId,
+                PizzaCollection = model.PizzaCollection,
                 Delivery = model.Delivery,
                 //Pending = model.Pending,  does it need to be defined when the order is created or only when listed?
                 OrderTime = DateTime.Now,
@@ -49,7 +49,7 @@ namespace POS.Services
                 {
                     OrderId = x.OrderId,
                     CustomerId = x.CustomerId,
-                    PizzaId = x.PizzaId,
+                    PizzaCollection = x.PizzaCollection,
                     Delivery = x.Delivery,
                     Pending = x.Pending,
                     OrderTime = x.OrderTime,

@@ -75,19 +75,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-
     <Compile Include="EmployeeModels\EmployeeCreate.cs" />
     <Compile Include="EmployeeModels\EmployeeListItem.cs" />
-
     <Compile Include="OrderModels\OrderCreate.cs" />
     <Compile Include="OrderModels\OrderListItem.cs" />
     <Compile Include="CustomerModels\CustomerCreate.cs" />
     <Compile Include="CustomerModels\CustomerListItem.cs" />
-
-    <Compile Include="PizzaModel.cs" />
     <Compile Include="PizzaModels\PizzaCreate.cs" />
     <Compile Include="PizzaModels\PizzaListItem.cs" />
-
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

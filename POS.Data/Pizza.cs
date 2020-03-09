@@ -24,7 +24,7 @@ namespace POS.Data
         public Order Order { get; set; }
 
 
-        public Guid EmployeeId { get; set; }
+        public int EmployeeId { get; set; }
         public int CustomerId { get; set; }
 
         public bool Cheese { get; set; }
