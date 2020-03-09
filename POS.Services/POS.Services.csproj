@@ -178,6 +178,16 @@
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\POS.Data\POS.Data.csproj">
+      <Project>{6d821ad0-943c-43ac-b404-3c3dfff60a96}</Project>
+      <Name>POS.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\POS.Models\POS.Models.csproj">
+      <Project>{b18efa01-a2b2-4654-961d-61a9ee50a1fc}</Project>
+      <Name>POS.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

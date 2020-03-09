@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace POS.Data
 {
-    public class Employee : ApplicationUser //see POS.WebAPI/Models/AccountBindingModels
+    public class Employee : ApplicationUser //Arthure: see POS.WebAPI/Models/AccountBindingModels EAC: ApplicationUser in POS.Data/IdentityModels.cs is inheriting from IdentityUser, which Peek Definition says comes from metadata
     {
         [Key]
-        public int EmployeeId { get; set; }
+        public int EmployeeId { get; set; } //EAC: a table of only one (this) property seems strange
 
 
     }
