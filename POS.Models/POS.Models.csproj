@@ -75,8 +75,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+
+    <Compile Include="OrderModels\OrderCreate.cs" />
+    <Compile Include="OrderModels\OrderListItem.cs" />
+    <Compile Include="PizzaModel.cs" />
     <Compile Include="PizzaModels\PizzaCreate.cs" />
     <Compile Include="PizzaModels\PizzaListItem.cs" />
+
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -11,7 +11,7 @@ namespace POS.Data
     public class Customer
     {
         [Key]
-        public int CustomerId { get; set; } 
+        public int CustomerId { get; set; }
 
         public string Name { get; set; }
 
@@ -25,6 +25,5 @@ namespace POS.Data
 
         [ForeignKey(nameof(CustomerOrderCollection))]
         public ICollection<Order> CustomerOrderCollection { get; set; }
-
     }
 }
