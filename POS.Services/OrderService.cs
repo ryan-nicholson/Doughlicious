@@ -11,9 +11,9 @@ namespace POS.Services
     public class OrderService
     {
         // Creating a field to tie the order to a reference object (employee making order)
-        private readonly int _employeeId;
+        private readonly string _employeeId;
 
-        public OrderService(int employeeId)
+        public OrderService(string employeeId)
         {
             _employeeId = employeeId;
         }

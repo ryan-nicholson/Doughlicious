@@ -19,7 +19,7 @@ namespace POS.Data
         public virtual Customer Customer { get; set; }
 
         [ForeignKey(nameof(Employee))]
-        public int EmployeeId { get; set; }
+        public string EmployeeId { get; set; }
 
         public virtual Employee Employee { get; set; }
 

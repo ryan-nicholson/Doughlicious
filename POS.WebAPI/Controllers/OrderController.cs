@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using POS.Data;
 using POS.Models.OrderModels;
 using POS.Services;
 using System;
@@ -12,19 +13,19 @@ namespace POS.WebAPI.Controllers
 {
     public class OrderController : ApiController
     {
-        public IHttpActionResult Get()
+        public IHttpActionResult Get(Employee employee)
         {
-            OrderService orderService = CreateOrderService();
+            OrderService orderService = CreateOrderService(employee);
             var orders = orderService.GetAllOrders();
             return Ok(orders);
         }
 
-        public IHttpActionResult PostOrder(OrderCreate order)
+        public IHttpActionResult PostOrder(OrderCreate order, Employee employee)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var service = CreateOrderService();
+            var service = CreateOrderService(employee);
 
             if (!service.CreateOrder(order))
                 return InternalServerError();
@@ -32,9 +33,9 @@ namespace POS.WebAPI.Controllers
             return Ok();
         }
 
-        private OrderService CreateOrderService()
+        private OrderService CreateOrderService(Employee employee)
         {
-            int employeeId = int.Parse(User.Identity.GetUserId());
+            var employeeId = employee.Id; //int.Parse(User.Identity.GetUserId());
             var orderService = new OrderService(employeeId);
             return orderService;
         }
