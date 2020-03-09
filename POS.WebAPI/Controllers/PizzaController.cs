@@ -1,7 +1,7 @@
 
 using Microsoft.AspNet.Identity;
 using System;
-﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity;
 using POS.Models.PizzaModels;
 using POS.Services;
 using System;
@@ -12,11 +12,6 @@ using System.Net.Http;
 using System.Web.Http;
 
 
-namespace POS.WebAPI.Controllers
-{
-    public class PizzaController : ApiController
-    {
-    }
 
 namespace POS.WebAPI.Controllers
 {
