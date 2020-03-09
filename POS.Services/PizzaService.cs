@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace POS.Models
+namespace POS.Services
 {
-    class PizzaModel
+    class PizzaService
     {
+        
     }
 }
