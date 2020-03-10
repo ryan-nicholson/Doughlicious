@@ -14,19 +14,19 @@ namespace POS.WebAPI.Controllers
     [Authorize]
     public class EmployeeController : ApiController
     {
-        public IHttpActionResult Get(ApplicationUser user)
+        public IHttpActionResult Get()
         {
-            EmployeeService employeeService = CreateEmployeeService(user);
+            EmployeeService employeeService = CreateEmployeeService();
             var employees = employeeService.GetEmployees(); //This error for GetEmployees() related to GetEmployees() in EmployeeService.cs, which says that function is declared but never used?
             return Ok(employees);
         }
 
-        public IHttpActionResult Post(EmployeeCreate employee, ApplicationUser user)
+        public IHttpActionResult Post(EmployeeCreate employee)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var service = CreateEmployeeService(user);
+            var service = CreateEmployeeService();
 
             if (!service.CreateEmployee(employee))//This error for CreateEmployee() related to CreateEmployee() in EmployeeService.cs, which says that function is declared but never used?
                 return InternalServerError();
@@ -34,7 +34,7 @@ namespace POS.WebAPI.Controllers
             return Ok();
         }
 
-        private EmployeeService CreateEmployeeService(ApplicationUser applicationUser)
+        private EmployeeService CreateEmployeeService()
         {
             var userId = Guid.Parse(User.Identity.GetUserId());
             var employeeService = new EmployeeService(userId);
