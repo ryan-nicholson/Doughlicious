@@ -14,7 +14,7 @@ namespace POS.Models.OrderModels
         public bool Delivery { get; set; }
         public double Price { get; set; }
         public DateTime OrderTime { get; set; }
-        public ICollection<Pizza> PizzaCollection { get; set; }
+        public bool Pending { get; set; }
 
     }
 }

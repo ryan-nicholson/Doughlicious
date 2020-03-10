@@ -51,7 +51,6 @@ namespace POS.WebAPI.Controllers
             }
             return BadRequest();
         }
-
         [HttpPost]
         public IHttpActionResult Post(string email)
         {
@@ -100,7 +99,6 @@ namespace POS.WebAPI.Controllers
             }
             return BadRequest();
         }
-
         private UserService CreateUserService()
         {
             var userGuid = Guid.Parse(User.Identity.GetUserId());

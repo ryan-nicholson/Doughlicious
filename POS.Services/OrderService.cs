@@ -13,22 +13,46 @@ namespace POS.Services
         // Creating a field to tie the order to a reference object (employee making order)
         private readonly int _userId;
 
-        public OrderService(int employeeId)
+        public OrderService(int userId)
         {
-            _userId = employeeId;
+            _userId = userId;
         }
 
         public bool CreateOrder(OrderCreate model)
         {
-            var order = new Order()
+            var order = new Order();
+            using (var ctx = new ApplicationDbContext())
+
             {
-                UserId = _userId,
-                CustomerId = model.CustomerId,
-                PizzaCollection = model.PizzaCollection,
-                Delivery = model.Delivery,
-                Pending = true,
-                OrderTime = DateTime.Now,
-                Price = model.Price
+
+
+                if (ctx.UserTable.Find(_userId).TypeUser == POSUser.UserTypes.Customer)
+                {
+
+                    {
+                        order.UserId = _userId;
+                        order.CustomerId = _userId;
+                        order.Delivery = model.Delivery;
+                        order.Pending = true;
+                        order.OrderTime = DateTime.Now;
+                        order.Price = model.Price;
+                    };
+                }
+                else
+                {
+
+                    {
+
+                        order.UserId = _userId;
+                        order.CustomerId = model.CustomerId;
+                        order.Delivery = model.Delivery;
+                        order.Pending = true;
+                        order.OrderTime = DateTime.Now;
+                        order.Price = model.Price;
+
+                    };
+
+                }
             };
 
             var dbContext = new ApplicationDbContext();
@@ -38,7 +62,7 @@ namespace POS.Services
 
         }
 
-        // Get all orders belnging to employee
+
         public IEnumerable<OrderListItem> GetAllOrders()
         {
             var dbContext = new ApplicationDbContext();
@@ -49,7 +73,6 @@ namespace POS.Services
                 {
                     OrderId = x.OrderId,
                     UserId = x.UserId,
-                    PizzaCollection = x.PizzaCollection,
                     Delivery = x.Delivery,
                     Pending = x.Pending,
                     OrderTime = x.OrderTime,
@@ -60,3 +83,4 @@ namespace POS.Services
         }
     }
 }
+

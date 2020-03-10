@@ -18,9 +18,6 @@ namespace POS.Services
             _userGuid = userGuid;
         }
 
-
-
-
         public bool CreatePOSUser( string email)
         {
             var entity = new POSUser()
@@ -41,8 +38,7 @@ namespace POS.Services
         {
             using (var ctx = new ApplicationDbContext())
             {
-                var query =
-                    ctx.UserTable;
+                var query = ctx.UserTable;
 
                 return query.ToArray();
             }
@@ -98,7 +94,7 @@ namespace POS.Services
                 var query =
                     ctx
                         .UserTable
-                        .Where(e => e.UserGuid == _userGuid && e.TypeUser == POSUser.UserTypes.Customer)
+                        .Where(e => e.TypeUser == POSUser.UserTypes.Customer)
                         .Select(
                             e =>
                                 new UserListItem
@@ -119,7 +115,7 @@ namespace POS.Services
                 var query =
                     ctx
                         .UserTable
-                        .Where(e => e.UserGuid == _userGuid && e.TypeUser == POSUser.UserTypes.Employee)
+                        .Where(e => e.TypeUser == POSUser.UserTypes.Employee)
                         .Select(
                             e =>
                                 new UserListItem
@@ -140,7 +136,7 @@ namespace POS.Services
                 var query =
                     ctx
                         .UserTable
-                        .Where(e => e.UserGuid == _userGuid && e.TypeUser == POSUser.UserTypes.Manager)
+                        .Where(e => e.TypeUser == POSUser.UserTypes.Manager)
                         .Select(
                             e =>
                                 new UserListItem
@@ -158,11 +154,11 @@ namespace POS.Services
         {
             using (var ctx = new ApplicationDbContext())
             {
-                var usertype = ctx.UserTable.Find(_userGuid);
+                var usertype = ctx.UserTable.Find(_userGuid).TypeUser;
                 
                 var query = ctx.UserTable.Find(email);
 
-                if (usertype.TypeUser == POSUser.UserTypes.Manager)
+                if (usertype == POSUser.UserTypes.Manager)
                 {
                     query.TypeUser = POSUser.UserTypes.Employee;
                 }
@@ -174,11 +170,11 @@ namespace POS.Services
         {
             using (var ctx = new ApplicationDbContext())
             {
-                var usertype = ctx.UserTable.Find(_userGuid);
+                var usertype = ctx.UserTable.Find(_userGuid).TypeUser;
 
                 var query = ctx.UserTable.Find(email);
 
-                if (usertype.TypeUser == POSUser.UserTypes.Manager)
+                if (usertype == POSUser.UserTypes.Manager)
                 {
                     query.TypeUser = POSUser.UserTypes.Employee;
                 }
@@ -190,11 +186,11 @@ namespace POS.Services
         {
             using (var ctx = new ApplicationDbContext())
             {
-                var usertype = ctx.UserTable.Find(_userGuid);
+                var usertype = ctx.UserTable.Find(_userGuid).TypeUser;
 
                 var query = ctx.UserTable.Find(email);
 
-                if (usertype.TypeUser == POSUser.UserTypes.Manager)
+                if (usertype == POSUser.UserTypes.Manager)
                 {
                     query.TypeUser = POSUser.UserTypes.Manager;
                 }
@@ -215,12 +211,8 @@ namespace POS.Services
                     ctx.UserTable.Remove(query);
                 }
                 return usertype.TypeUser == POSUser.UserTypes.Manager;
-
-
             }
         }
     }
-
-
 }
 

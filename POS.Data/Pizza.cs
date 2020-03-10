@@ -19,13 +19,13 @@ namespace POS.Data
         [Key]
         public int PizzaId { get; set; }
 
-        [ForeignKey(nameof(Order))]
-        public int OrderId { get; set; }
-        public Order Order { get; set; }
+        [ForeignKey(nameof(OrderPizzas))]
+        public int OrderPizzasId { get; set; }
+        public OrderPizzas OrderPizzas { get; set; }
 
         public int UserId { get; set; }
         public int CustomerId { get; set; }
-        
+
 
         public bool Cheese { get; set; }
 
@@ -46,5 +46,22 @@ namespace POS.Data
         public ToppingType? TypeOfToppingFive { get; set; }
 
         public string Comment { get; set; }//We need to set default value to ""
+    }
+    public class OrderPizzas
+    {
+        [Key]
+        public int OrderPizzaId { get; set; }
+
+        [ForeignKey(nameof(Order))]
+        public int OrderId { get; set; }
+        public virtual Order Order { get; set; }
+
+        [ForeignKey(nameof(POSUser))]
+        public int UserId { get; set; }
+        public virtual POSUser POSUser { get; set; }
+
+        [ForeignKey(nameof(Pizza))]
+        public int PizzaId { get; set; }
+        public virtual Pizza Pizza { get; set; }
     }
 }
