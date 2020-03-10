@@ -18,16 +18,16 @@ namespace POS.Services
             _userGuid = userGuid;
         }
 
-        
 
 
-        public bool CreatePOSUser(UserCreate model)
+
+        public bool CreatePOSUser( string email)
         {
             var entity = new POSUser()
             {
-                UserGuid = _userGuid,
-                TypeUser = model.TypeUser,
-                Name = GetNameByGuid()
+                UserGuid = GetGuid(email),
+                TypeUser = POSUser.UserTypes.Customer,
+                Name = GetNameByGuid(email)
             };
 
             using (var ctx = new ApplicationDbContext())
@@ -37,46 +37,165 @@ namespace POS.Services
             }
         }
 
-        public IEnumerable<UserListItem> GetUserByGuid()
+        public IEnumerable<POSUser> GetUsers()
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var query =
+                    ctx.UserTable;
+
+                return query.ToArray();
+            }
+        }
+        private string GetNameByGuid(string email)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var user = ctx.UserTable.Find(email);
+                
+                return user.Name;
+            }
+        }
+        public Guid GetGuid(string email)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var user = ctx.UserTable.Find(email);
+
+                return user.UserGuid;
+            }
+        }
+        public UserListItem GetUserByGuid(string email)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+
+                var user = ctx.UserTable.Find(email);
+                var query =
+                    ctx
+                        .UserTable
+                        .Where(e => e.UserGuid == user.UserGuid)
+                        .Select(
+                            e =>
+                            new UserListItem
+                            {
+
+                                UserId = e.UserId,
+                                Name = e.Name,
+                                UserGuid = user.UserGuid
+
+                            }
+                            
+                        ) ; 
+
+                return query.ToArray()[user.UserId];
+            }
+        }
+        public IEnumerable<UserListItem> GetCustomers()
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var query =
                     ctx
-                        .Users
-                        .Where(e => Guid.Parse(e.Id) == _userGuid)
+                        .UserTable
+                        .Where(e => e.UserGuid == _userGuid && e.TypeUser == POSUser.UserTypes.Customer)
                         .Select(
                             e =>
                                 new UserListItem
                                 {
-                                    
-                                    UserGuid = Guid.Parse(e.Id)
-
+                                    UserId = e.UserId,
+                                    UserGuid = e.UserGuid,
+                                    Name = e.Name
                                 }
                         ); ;
 
                 return query.ToArray();
             }
         }
-        private string GetNameByGuid()
+        public IEnumerable<UserListItem> GetEmployees()
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var query =
                     ctx
-                        .Users
-                        .Where(e => Guid.Parse(e.Id) == _userGuid)
+                        .UserTable
+                        .Where(e => e.UserGuid == _userGuid && e.TypeUser == POSUser.UserTypes.Employee)
                         .Select(
                             e =>
                                 new UserListItem
                                 {
-
+                                    UserId = e.UserId,
+                                    UserGuid = e.UserGuid,
                                     Name = e.Name
-
                                 }
                         ); ;
 
-                return query.ToArray()[0].Name;
+                return query.ToArray();
+            }
+        }
+        public POSUser ChangeUserTypeEmployee(string email)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var usertype = ctx.UserTable.Find(_userGuid);
+                
+                var query = ctx.UserTable.Find(email);
+
+                if (usertype.TypeUser == POSUser.UserTypes.Manager)
+                {
+                    query.TypeUser = POSUser.UserTypes.Employee;
+                }
+
+                return query;
+            }
+        }
+        public POSUser ChangeUserTypeCustomer(string email)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var usertype = ctx.UserTable.Find(_userGuid);
+
+                var query = ctx.UserTable.Find(email);
+
+                if (usertype.TypeUser == POSUser.UserTypes.Manager)
+                {
+                    query.TypeUser = POSUser.UserTypes.Employee;
+                }
+
+                return query;
+            }
+        }
+        public POSUser ChangeUserTypeManager(string email)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var usertype = ctx.UserTable.Find(_userGuid);
+
+                var query = ctx.UserTable.Find(email);
+
+                if (usertype.TypeUser == POSUser.UserTypes.Manager)
+                {
+                    query.TypeUser = POSUser.UserTypes.Manager;
+                }
+
+                return query;
+            }
+        }
+        public bool DeleteUser(string email)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var usertype = ctx.UserTable.Find(_userGuid);
+
+                var query = ctx.UserTable.Find(email);
+
+                if (usertype.TypeUser == POSUser.UserTypes.Manager)
+                {
+                    ctx.UserTable.Remove(query);
+                }
+                return usertype.TypeUser == POSUser.UserTypes.Manager;
+
+
             }
         }
     }
