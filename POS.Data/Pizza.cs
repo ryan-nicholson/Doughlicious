@@ -11,10 +11,10 @@ namespace POS.Data
 {
     public class Pizza
     {
-        public enum CrustType { pan }
-        public enum ToppingType { pepperoni }
-        public enum SauceType { red }
-        public enum SizeType { XXL }
+        public enum CrustType { pan }//EAC: confirm with group: "pan, handtossed, thin" ?
+        public enum ToppingType { pepperoni }//EAC: confirm with group: "pepperoni, sausage, ham, bacon, chicken, mushrooms, onions, tomatoes, black olives, bell peppers, jalapenos (any way to include the tilde?), extra cheese"?
+        public enum SauceType { red }//EAC: confirm with group: "red, white, pesto"?
+        public enum SizeType { XXL }//EAC: confirm with group: "small, medium, large, extra large"?
 
         [Key]
         public int PizzaId { get; set; }

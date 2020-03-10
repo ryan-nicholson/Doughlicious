@@ -33,7 +33,7 @@ namespace POS.Services
                     Cheese= model.Cheese,
                     Comment = model.Comment,
                     TypeOfCrust = model.TypeOfCrust,
-                    TypeOfSauce = model.TypeOFSauce,
+                    TypeOfSauce = model.TypeOfSauce,
                     TypeOfSize = model.TypeOfSize,
                     TypeOfToppingOne = model.TypeOfToppingOne,
                     TypeOfToppingTwo = model.TypeOfToppingTwo,
