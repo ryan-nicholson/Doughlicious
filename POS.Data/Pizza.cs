@@ -22,8 +22,11 @@ namespace POS.Data
         [ForeignKey(nameof(Order))]
         public int OrderId { get; set; }
         public Order Order { get; set; }
+
         public int UserId { get; set; }
+        public int CustomerId { get; set; }
         
+
         public bool Cheese { get; set; }
 
         public CrustType TypeOfCrust { get; set; }

@@ -1,22 +1,19 @@
-
-using Microsoft.AspNet.Identity;
-using System;
-using POS.Models.PizzaModels;
+﻿using Microsoft.AspNet.Identity;
+using POS.Data;
+using POS.Models.EmployeeModels;
+using POS.Models.OrderModels;
 using POS.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using POS.Data;
-using POS.Models.EmployeeModels;
 
 namespace POS.WebAPI.Controllers
 {
-    [Authorize]
-    public class PizzaController : ApiController
+    public class OrderController : ApiController
     {
-
         private int GetUserByGuid()
         {
             using (var ctx = new ApplicationDbContext())
@@ -40,27 +37,29 @@ namespace POS.WebAPI.Controllers
         }
         public IHttpActionResult Get()
         {
-            PizzaService pizzaService = CreatePizzaService();
-            var pizzas = pizzaService.GetPizzas();
-            return Ok(pizzas);
+            OrderService orderService = CreateOrderService();
+            var orders = orderService.GetAllOrders();
+            return Ok(orders);
         }
-        private PizzaService CreatePizzaService()
-        {
-            int userId = GetUserByGuid();
-            PizzaService pizzaService = new PizzaService(userId);
-            return pizzaService;
-        }
-        public IHttpActionResult Post(PizzaCreate pizza)
+
+        public IHttpActionResult PostOrder(OrderCreate order)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var service = CreatePizzaService();
+            var service = CreateOrderService();
 
-            if (!service.CreatePizza(pizza))
+            if (!service.CreateOrder(order))
                 return InternalServerError();
 
             return Ok();
+        }
+
+        private OrderService CreateOrderService()
+        {
+            
+            var orderService = new OrderService(GetUserByGuid());
+            return orderService;
         }
     }
 }

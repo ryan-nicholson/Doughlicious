@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace POS.Data
 {
-    public class User
+    public class POSUser
     {
         public enum UserTypes { Customer, Employee, Manager}
         [Key]
         public int UserId { get; set; }
+        public string Name { get; set; }
         public Guid UserGuid { get; set; }
         public UserTypes TypeUser { get; set; }
         public ICollection<Order> UserOrders { get; set; }

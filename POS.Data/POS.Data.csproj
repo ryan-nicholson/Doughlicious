@@ -91,6 +91,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IdentityModels.cs" />
+    <Compile Include="Migrations\202003091701421_InitialMigration.cs" />
+    <Compile Include="Migrations\202003091701421_InitialMigration.designer.cs">
+      <DependentUpon>202003091701421_InitialMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003091736159_POS.cs" />
+    <Compile Include="Migrations\202003091736159_POS.designer.cs">
+      <DependentUpon>202003091736159_POS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003091744113_AnotherInitialMigration.cs" />
+    <Compile Include="Migrations\202003091744113_AnotherInitialMigration.designer.cs">
+      <DependentUpon>202003091744113_AnotherInitialMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Pizza.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -194,6 +207,17 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202003091701421_InitialMigration.resx">
+      <DependentUpon>202003091701421_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003091736159_POS.resx">
+      <DependentUpon>202003091736159_POS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003091744113_AnotherInitialMigration.resx">
+      <DependentUpon>202003091744113_AnotherInitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

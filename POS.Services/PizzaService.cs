@@ -10,18 +10,20 @@ namespace POS.Services
 {
     public class PizzaService
     {
-        private readonly Guid _userId;
+        private readonly int _userId;
 
-        public PizzaService(Guid userId)
+        
+        public PizzaService(int userId)
         {
             _userId = userId;
         }
+        
         public bool CreatePizza(PizzaCreate model)
         {
             var entity =
                 new Pizza()
                 {
-                    EmployeeId = _userId,
+                    UserId = _userId,
                     CustomerId = model.CustomerId,
                     OrderId = model.OrderId,
                     Cheese= model.Cheese,
@@ -38,7 +40,7 @@ namespace POS.Services
 
             using (var ctx = new ApplicationDbContext())
             {
-                ctx.Pizzas.Add(entity);
+                ctx.PizzaTable.Add(entity);
                 return ctx.SaveChanges() == 1;
             }
         }
@@ -48,8 +50,8 @@ namespace POS.Services
             {
                 var query =
                     ctx
-                        .Pizzas
-                        .Where(e => e.EmployeeId == _userId)
+                        .PizzaTable
+                        .Where(e => e.UserId == _userId)
                         .Select(
                             e =>
                                 new PizzaListItem

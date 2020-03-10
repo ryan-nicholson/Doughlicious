@@ -13,19 +13,25 @@ namespace POS.Data
         [Key]
         public int OrderId { get; set; }
 
+
         [ForeignKey(nameof(User))]
         public int UserId { get; set; }
-        public virtual User User { get; set; }
+        public virtual POSUser User { get; set; }
+
 
         [ForeignKey(nameof(PizzaCollection))]
         public ICollection<Pizza> PizzaCollection { get; set; }
+        public int CustomerId { get; set; }
 
         public bool Delivery { get; set; }
 
         public bool Pending { get; set; }
 
-        public DateTime OrderTime { get; }
+        // Added a set property to OrderTime, couldn't set the order time for the order when being created
+        public DateTime OrderTime { get; set; }
 
-        public double Price { get; }
+        // Added a set property to Price, couldn't set the price for the order when being created
+        public double Price { get; set; }
     }
 }
+
