@@ -78,7 +78,6 @@
   <ItemGroup>
     <Compile Include="UserService.cs" />
     <Compile Include="OrderService.cs" />
-    <Compile Include="CustomerService.cs" />
     <Compile Include="PizzaService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

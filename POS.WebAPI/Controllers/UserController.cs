@@ -28,16 +28,40 @@ namespace POS.WebAPI.Controllers
             var users = userService.GetUserByGuid(email);
             return Ok(users);
         }
+        [HttpGet]
+        public IHttpActionResult GetUsersByRole(POSUser.UserTypes userTypes)
+        {
+            if (userTypes == POSUser.UserTypes.Customer)
+            {
+                UserService userService = CreateUserService();
+                var users = userService.GetCustomers();
+                return Ok(users);
+            }
+            if (userTypes == POSUser.UserTypes.Employee)
+            {
+                UserService userService = CreateUserService();
+                var users = userService.GetEmployees();
+                return Ok(users);
+            }
+            if (userTypes == POSUser.UserTypes.Manager)
+            {
+                UserService userService = CreateUserService();
+                var users = userService.GetManagers();
+                return Ok(users);
+            }
+            return BadRequest();
+        }
+
         [HttpPost]
-        public IHttpActionResult Post( string email)
+        public IHttpActionResult Post(string email)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var service = CreateUserService();
-            var newUser = service.CreatePOSUser( email);
+            var newUser = service.CreatePOSUser(email);
 
-            if (!service.CreatePOSUser( email))
+            if (!service.CreatePOSUser(email))
                 return InternalServerError();
 
             return Ok(newUser);

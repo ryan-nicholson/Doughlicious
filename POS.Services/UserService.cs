@@ -133,6 +133,27 @@ namespace POS.Services
                 return query.ToArray();
             }
         }
+        public IEnumerable<UserListItem> GetManagers()
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var query =
+                    ctx
+                        .UserTable
+                        .Where(e => e.UserGuid == _userGuid && e.TypeUser == POSUser.UserTypes.Manager)
+                        .Select(
+                            e =>
+                                new UserListItem
+                                {
+                                    UserId = e.UserId,
+                                    UserGuid = e.UserGuid,
+                                    Name = e.Name
+                                }
+                        ); ;
+
+                return query.ToArray();
+            }
+        }
         public POSUser ChangeUserTypeEmployee(string email)
         {
             using (var ctx = new ApplicationDbContext())
