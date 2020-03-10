@@ -39,5 +39,29 @@ namespace POS.WebAPI.Controllers
             var orderService = new OrderService(employeeId);
             return orderService;
         }
+
+        public IHttpActionResult Put(Employee employee, OrderEdit order)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var service = CreateOrderService(employee);
+
+            if (!service.UpdateOrder(order))
+                return InternalServerError();
+
+            return Ok();
+        }
+
+        public IHttpActionResult Delete(Employee employee, int orderId)
+        {
+            var service = CreateOrderService(employee);
+
+            if (!service.DeleteOrder(orderId))
+                return InternalServerError();
+
+            return Ok();
+
+        }
     }
 }

@@ -31,32 +31,83 @@ namespace POS.Services
                 Price = model.Price
             };
 
-            var dbContext = new ApplicationDbContext();
-
-            dbContext.Orders.Add(order);
-            return dbContext.SaveChanges() == 1;
-
+            using (var dbContext = new ApplicationDbContext())
+            {
+                dbContext.Orders.Add(order);
+                return dbContext.SaveChanges() == 1;
+            }
         }
 
         // Get all orders belnging to employee
         public IEnumerable<OrderListItem> GetAllOrders()
         {
-            var dbContext = new ApplicationDbContext();
+            using (var dbContext = new ApplicationDbContext())
+            {
+                var query = dbContext.Orders
+                    .Where(x => x.EmployeeId == _employeeId)
+                    .Select(x => new OrderListItem
+                    {
+                        OrderId = x.OrderId,
+                        CustomerId = x.CustomerId,
+                        PizzaCollection = x.PizzaCollection,
+                        Delivery = x.Delivery,
+                        Pending = x.Pending,
+                        OrderTime = x.OrderTime,
+                        Price = x.Price
+                    });
 
-            var query = dbContext.Orders
-                .Where(x => x.EmployeeId == _employeeId)
-                .Select(x => new OrderListItem
+                return query.ToArray();
+            }
+        }
+
+        public OrderDetail GetOrderById(int orderId)
+        {
+            using (var dbContext = new ApplicationDbContext())
+            {
+                var entity = dbContext.Orders
+                    .Single(x => x.OrderId == orderId && x.EmployeeId == _employeeId);
+
+                return new OrderDetail
                 {
-                    OrderId = x.OrderId,
-                    CustomerId = x.CustomerId,
-                    PizzaCollection = x.PizzaCollection,
-                    Delivery = x.Delivery,
-                    Pending = x.Pending,
-                    OrderTime = x.OrderTime,
-                    Price = x.Price
-                });
+                    OrderId = entity.OrderId,
+                    CustomerId = entity.CustomerId,
+                    PizzaCollection = entity.PizzaCollection,
+                    Delivery = entity.Delivery,
+                    Pending = entity.Pending,
+                    OrderTime = entity.OrderTime,
+                    Price = entity.Price
+                };
+            }
+        }
 
-            return query.ToArray();
+        public bool UpdateOrder(OrderEdit model)
+        {
+            using (var dbContext = new ApplicationDbContext())
+            {
+                var entity = dbContext.Orders
+                    .Single(x => x.OrderId == model.OrderId && x.EmployeeId == _employeeId);
+
+                entity.PizzaCollection = model.PizzaCollection;
+                entity.Delivery = model.Delivery;
+                entity.Pending = model.Pending;
+                entity.Price = model.Price;
+
+                return dbContext.SaveChanges() == 1;
+            }
+        }
+
+        public bool DeleteOrder(int orderId)
+        {
+            // Delete Order from the database
+            using (var dbContext = new ApplicationDbContext())
+            {
+                var entity = dbContext.Orders
+                    .Single(x => x.OrderId == orderId && x.EmployeeId == _employeeId);
+
+                dbContext.Orders.Remove(entity);
+
+                return dbContext.SaveChanges() == 1;
+            }
         }
     }
 }

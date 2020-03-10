@@ -105,6 +105,10 @@
     <Compile Include="Migrations\202003091744113_AnotherInitialMigration.designer.cs">
       <DependentUpon>202003091744113_AnotherInitialMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003091930318_AddedNamePropToAppUser.cs" />
+    <Compile Include="Migrations\202003091930318_AddedNamePropToAppUser.designer.cs">
+      <DependentUpon>202003091930318_AddedNamePropToAppUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Pizza.cs" />
@@ -218,6 +222,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003091744113_AnotherInitialMigration.resx">
       <DependentUpon>202003091744113_AnotherInitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003091930318_AddedNamePropToAppUser.resx">
+      <DependentUpon>202003091930318_AddedNamePropToAppUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
