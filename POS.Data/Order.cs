@@ -26,6 +26,7 @@ namespace POS.Data
         [ForeignKey(nameof(PizzaCollection))]
         public ICollection<Pizza> PizzaCollection { get; set; }
 
+
         public bool Delivery { get; set; }
 
         public bool Pending { get; set; }

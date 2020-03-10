@@ -78,6 +78,8 @@
     <Compile Include="EmployeeModels\EmployeeCreate.cs" />
     <Compile Include="EmployeeModels\EmployeeListItem.cs" />
     <Compile Include="OrderModels\OrderCreate.cs" />
+    <Compile Include="OrderModels\OrderDetail.cs" />
+    <Compile Include="OrderModels\OrderEdit.cs" />
     <Compile Include="OrderModels\OrderListItem.cs" />
     <Compile Include="CustomerModels\CustomerCreate.cs" />
     <Compile Include="CustomerModels\CustomerListItem.cs" />
