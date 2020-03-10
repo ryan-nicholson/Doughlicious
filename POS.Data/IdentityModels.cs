@@ -5,10 +5,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 
-<<<<<<< HEAD
-=======
 
->>>>>>> bef831986b484ae09010858bc853cfb3aa49617a
 
 namespace POS.Data
 {
