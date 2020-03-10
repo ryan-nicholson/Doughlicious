@@ -1,7 +1,9 @@
 ﻿using POS.Data;
 using POS.Models;
+using POS.Models.CustomerModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +12,7 @@ namespace POS.Services
 {
     public class CustomerService
     {
-        
+
         private readonly int _userId;
 
         public CustomerService(int userId)
@@ -55,8 +57,55 @@ namespace POS.Services
                 return query.ToArray();
             }
         }
+        public CustomerDetail GetCustomerById(int id)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Customers
+                        .Single(e => e.CustomerId == id);
+                return
+                    new CustomerDetail
+                    {
+                        CustomerId = entity.CustomerId,
+                        Name = entity.Name,
+                        EmailAddress = entity.EmailAddress,
+                        Address = entity.Address,
+                        PhoneNumber = entity.PhoneNumber
+                    };
+            }
+        }
+        public bool UpdateCustomer(CustomerEdit model)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Customers
+                        .Single(e => e.CustomerId == model.CustomerId);
+                entity.Name = model.Name;
+                entity.EmailAddress = DataType.EmailAddress;
+                entity.Address = model.Address;
+                entity.PhoneNumber = DataType.PhoneNumber;
 
-        
+                return ctx.SaveChanges() == 1;
+            }
+        }
+        public bool DeleteCustomer(int CustomerId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Customers
+                        .Single(e => e.CustomerId == CustomerId);
+
+                ctx.Customers.Remove(entity);
+                return ctx.SaveChanges() == 1;
+            }
+        }
     }
 }
+
 

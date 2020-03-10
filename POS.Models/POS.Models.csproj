@@ -75,6 +75,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomerModels\CustomerDetail.cs" />
+    <Compile Include="CustomerModels\CustomerEdit.cs" />
     <Compile Include="EmployeeModels\EmployeeCreate.cs" />
     <Compile Include="EmployeeModels\EmployeeListItem.cs" />
     <Compile Include="OrderModels\OrderCreate.cs" />
