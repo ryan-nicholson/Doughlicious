@@ -11,29 +11,29 @@ namespace POS.Services
     public class OrderService
     {
         // Creating a field to tie the order to a reference object (employee making order)
-        private readonly string _employeeId;
+        private readonly int _userId;
 
-        public OrderService(string employeeId)
+        public OrderService(int employeeId)
         {
-            _employeeId = employeeId;
+            _userId = employeeId;
         }
 
         public bool CreateOrder(OrderCreate model)
         {
             var order = new Order()
             {
-                EmployeeId = _employeeId,
+                UserId = _userId,
                 CustomerId = model.CustomerId,
                 PizzaCollection = model.PizzaCollection,
                 Delivery = model.Delivery,
-                //Pending = model.Pending,  does it need to be defined when the order is created or only when listed?
+                Pending = true,
                 OrderTime = DateTime.Now,
                 Price = model.Price
             };
 
             var dbContext = new ApplicationDbContext();
 
-            dbContext.Orders.Add(order);
+            dbContext.OrderTable.Add(order);
             return dbContext.SaveChanges() == 1;
 
         }
@@ -43,12 +43,12 @@ namespace POS.Services
         {
             var dbContext = new ApplicationDbContext();
 
-            var query = dbContext.Orders
-                .Where(x => x.EmployeeId == _employeeId)
+            var query = dbContext.OrderTable
+                .Where(x => x.UserId == _userId)
                 .Select(x => new OrderListItem
                 {
                     OrderId = x.OrderId,
-                    CustomerId = x.CustomerId,
+                    UserId = x.UserId,
                     PizzaCollection = x.PizzaCollection,
                     Delivery = x.Delivery,
                     Pending = x.Pending,

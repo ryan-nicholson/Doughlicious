@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using POS.Data;
+using POS.Models.EmployeeModels;
 using POS.Models.OrderModels;
 using POS.Services;
 using System;
@@ -13,19 +14,40 @@ namespace POS.WebAPI.Controllers
 {
     public class OrderController : ApiController
     {
-        public IHttpActionResult Get(Employee employee)
+        private int GetUserByGuid()
         {
-            OrderService orderService = CreateOrderService(employee);
+            using (var ctx = new ApplicationDbContext())
+            {
+                var query =
+                    ctx
+                        .UserTable
+                        .Where(e => e.UserGuid == Guid.Parse(User.Identity.GetUserId()))
+                        .Select(
+                            e =>
+                                new UserListItem
+                                {
+
+                                    UserId = e.UserId
+
+                                }
+                        ); ;
+
+                return query.ToArray()[0].UserId;
+            }
+        }
+        public IHttpActionResult Get()
+        {
+            OrderService orderService = CreateOrderService();
             var orders = orderService.GetAllOrders();
             return Ok(orders);
         }
 
-        public IHttpActionResult PostOrder(OrderCreate order, Employee employee)
+        public IHttpActionResult PostOrder(OrderCreate order)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var service = CreateOrderService(employee);
+            var service = CreateOrderService();
 
             if (!service.CreateOrder(order))
                 return InternalServerError();
@@ -33,10 +55,10 @@ namespace POS.WebAPI.Controllers
             return Ok();
         }
 
-        private OrderService CreateOrderService(Employee employee)
+        private OrderService CreateOrderService()
         {
-            var employeeId = employee.Id; //int.Parse(User.Identity.GetUserId());
-            var orderService = new OrderService(employeeId);
+            
+            var orderService = new OrderService(GetUserByGuid());
             return orderService;
         }
     }
