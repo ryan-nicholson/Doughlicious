@@ -329,7 +329,8 @@ namespace POS.WebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            // ApplicationUser Constructor
+            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, Name = model.Name };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 

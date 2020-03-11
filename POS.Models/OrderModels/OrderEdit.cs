@@ -7,19 +7,17 @@ using System.Threading.Tasks;
 
 namespace POS.Models.OrderModels
 {
-    public class OrderCreate
+    public class OrderEdit
     {
-        public int UserId { get; set; }
+        public int OrderId { get; set; }
 
-        public int CustomerId { get; set; }
+        public ICollection<Pizza> Pizzas { get; set; }
 
         public bool Delivery { get; set; }
 
-        public double Price { get; set; }
-
-        public DateTime OrderTime { get; set; }
-
         public bool Pending { get; set; }
+
+        public double Price { get; set; }
 
     }
 }

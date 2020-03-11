@@ -83,6 +83,8 @@
     <Compile Include="UserModels\UserGetUserType.cs" />
     <Compile Include="UserModels\UserListItem.cs" />
     <Compile Include="OrderModels\OrderCreate.cs" />
+    <Compile Include="OrderModels\OrderDetail.cs" />
+    <Compile Include="OrderModels\OrderEdit.cs" />
     <Compile Include="OrderModels\OrderListItem.cs" />
     <Compile Include="PizzaModels\PizzaDetail.cs" />
 

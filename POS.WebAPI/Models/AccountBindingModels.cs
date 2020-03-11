@@ -32,7 +32,7 @@ namespace POS.WebAPI.Models
         public string ConfirmPassword { get; set; }
     }
 
-    public class RegisterBindingModel
+    public class RegisterBindingModel // RegisterCreate
     {
         [Required]
         [Display(Name = "Email")]
@@ -86,4 +86,5 @@ namespace POS.WebAPI.Models
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
+
 }
