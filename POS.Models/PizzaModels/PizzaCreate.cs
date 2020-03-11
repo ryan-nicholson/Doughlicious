@@ -22,8 +22,8 @@ namespace POS.Models.PizzaModels
         public Pizza.ToppingType TypeOfToppingFive { get; set; }
         public bool Cheese { get; set; }
         public string Comment { get; set; }
+        public int UserId { get; set; }
         public int CustomerId { get; set; }
-        public int EmployeeId { get; set; }
-        public int OrderId { get; set; }
+        public int OrderPizzasId { get; set; }
     }
 }
