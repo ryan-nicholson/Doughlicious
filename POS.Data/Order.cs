@@ -15,17 +15,17 @@ namespace POS.Data
 
         [ForeignKey(nameof(Customer))]
         public int CustomerId { get; set; }
-
         public virtual Customer Customer { get; set; }
+
 
         [ForeignKey(nameof(Employee))]
         public string EmployeeId { get; set; }
-
         public virtual Employee Employee { get; set; }
 
-        [ForeignKey(nameof(PizzaCollection))]
-        public ICollection<Pizza> PizzaCollection { get; set; }
 
+        //[ForeignKey(nameof(Pizzas))]
+        //public ICollection<Pizza> PizzaCollection { get; set; }
+        public virtual ICollection<Pizza> Pizzas { get; set; }
 
         public bool Delivery { get; set; }
 
