@@ -39,5 +39,27 @@ namespace POS.WebAPI.Controllers
 
             return Ok();
         }
+        public IHttpActionResult Put(PizzaEdit pizza)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var service = CreatePizzaService(pizza);
+
+            if (!service.UpdatePizza(pizza))
+                return InternalServerError();
+
+            return Ok();
+        }
+
+        public IHttpActionResult Delete(int id)
+        {
+            var service = CreatePizzaService();
+
+            if (!service.DeletePizza(id))
+                return InternalServerError();
+
+            return Ok();
+        }
     }
 }

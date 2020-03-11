@@ -16,8 +16,6 @@ namespace POS.Models.PizzaModels
 
         public int OrderId { get; set; }
         
-
-
         public string EmployeeId { get; set; }
         public int CustomerId { get; set; }
 
