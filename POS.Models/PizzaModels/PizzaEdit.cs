@@ -6,17 +6,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using static POS.Data.Pizza;
 
 namespace POS.Models.PizzaModels
 {
     public class PizzaEdit
     {
 
-        public enum CrustType { pan }
-        public enum ToppingType { pepperoni }
-        public enum SauceType { red }
-        public enum SizeType { XXL }
+        //public enum CrustType { pan }
+        //public enum ToppingType { pepperoni }
+        //public enum SauceType { red }
+        //public enum SizeType { XXL }
         public int PizzaId { get; set; }
 
         public int OrderId { get; set; }
