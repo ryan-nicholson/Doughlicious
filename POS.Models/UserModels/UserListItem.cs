@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace POS.Models
+namespace POS.Models.EmployeeModels
 {
-    public class CustomerListItem
+    public class UserListItem
     {
-        public int CustomerId { get; set; }
+        public int UserId { get; set; }
+        public Guid UserGuid { get; set; }
         public string Name { get; set; }
     }
 }
