@@ -9,11 +9,12 @@ namespace POS.Models.OrderModels
 {
     public class OrderCreate
     {
+        public int UserId { get; set; }
         public int CustomerId { get; set; }
         public bool Delivery { get; set; }
         public double Price { get; set; }
-
-        public ICollection<Pizza> PizzaCollection { get; set; }
+        public DateTime OrderTime { get; set; }
+        public bool Pending { get; set; }
 
     }
 }

@@ -12,6 +12,7 @@ namespace POS.Data
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
+        public string Name { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -32,9 +33,9 @@ namespace POS.Data
         {
             return new ApplicationDbContext();
         }
-        public DbSet<Employee> Employees { get; set; }
-        public DbSet<Customer> Customers { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<Pizza> Pizzas { get; set; }
+        public DbSet<POSUser> UserTable { get; set; }
+        public DbSet<Order> OrderTable { get; set; }
+        public DbSet<Pizza> PizzaTable { get; set; }
+
     }
 }
