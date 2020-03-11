@@ -12,10 +12,10 @@ namespace POS.Models.PizzaModels
     {
         public int PizzaId { get; set; }
         public int OrderId { get; set; }
-        public Order Order { get; set; }
+        //public Order Order { get; set; } //EAC: not needed because foreign key not needed here because it's not a table and foreign keys are only needed to show relationships between tables.
 
 
-        public string EmployeeId { get; set; }//EAC: do we want/need EmployeeId and CustomerId in this or any pizza models?
+        public int UserId { get; set; }
         public int CustomerId { get; set; }
 
         public bool Cheese { get; set; }

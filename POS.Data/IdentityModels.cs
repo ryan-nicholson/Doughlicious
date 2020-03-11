@@ -36,6 +36,6 @@ namespace POS.Data
         public DbSet<POSUser> UserTable { get; set; }
         public DbSet<Order> OrderTable { get; set; }
         public DbSet<Pizza> PizzaTable { get; set; }
-        public DbSet<OrderPizzas> OrderPizzasTable { get; set; }
+        //public DbSet<OrderPizzas> OrderPizzasTable { get; set; }//EAC: don't need this any more
     }
 }

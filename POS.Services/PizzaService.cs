@@ -1,4 +1,5 @@
-﻿using POS.Data;
+﻿
+using POS.Data;
 using POS.Models.PizzaModels;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace POS.Services
         {
             var entity =
                 new Pizza()
-                {
+                { 
                     UserId = _userId,
                     CustomerId = model.CustomerId,
                     OrderId = model.OrderId,
@@ -79,14 +80,14 @@ namespace POS.Services
             {
                 var entity =
                     ctx
-                        .Pizzas
-                        .Single(e => e.PizzaId == id);//EAC: && e.OwnerId == _userId); -- do we want to restrict who can see it here (e.g. a customer can only see their own pizzas but employee/manager can see everyone's)-- if so, what is the correct OwnerId name now?
+                        .PizzaTable
+                        .Single(e => e.PizzaId == id);
                 return
                     new PizzaDetail
                     {
                         PizzaId = entity.PizzaId,
                         OrderId = entity.OrderId,
-                        EmployeeId = entity.EmployeeId,//EAC: do we need this at all now and what to call it?
+                        UserId = entity.UserId,//EAC: do we need this at all now and what to call it?
                         CustomerId = entity.CustomerId,//EAC same note as EmployeeId
                         Cheese = entity.Cheese,
                         TypeOfCrust = entity.TypeOfCrust,
@@ -109,12 +110,12 @@ namespace POS.Services
             using (var ctx = new ApplicationDbContext())
             {
                 var entity = ctx
-                    .Pizzas
+                    .PizzaTable
                     .Single(e => e.PizzaId == model.PizzaId);//EAC: && e.OwnerId == _userId); -- do we want to restrict who can see it here (e.g. a customer can only see their own pizzas but employee/manager can see everyone's)-- if so, what is the correct OwnerId name now?
 
                 entity.PizzaId = model.PizzaId;
                 entity.OrderId = model.OrderId;
-                entity.EmployeeId = model.EmployeeId;//EAC: do we want to be able to edit EmployeeId in a pizza? I think probably not
+                entity.UserId = model.UserId;//EAC: do we want to be able to edit EmployeeId in a pizza? I think probably not
                 entity.CustomerId = model.CustomerId;//EAC same note as EmployeeId
                 entity.Cheese = model.Cheese;
                 entity.TypeOfCrust = model.TypeOfCrust;
@@ -126,7 +127,7 @@ namespace POS.Services
                 entity.TypeOfToppingFour = model.TypeOfToppingFour;
                 entity.TypeOfToppingFive = model.TypeOfToppingFive;
                 entity.Comment = model.Comment; 
-                entity.ModifiedUtc = DateTimeOffset.UtcNow;//EAC: do we want to have a ModifiedUtcOffset to show pizza edit time? Makes sense to me if only one pizza in an order with multiple pizzas was edited
+                //entity.ModifiedUtc = DateTimeOffset.UtcNow;//EAC: do we want to have a ModifiedUtcOffset to show pizza edit time? Makes sense to me if only one pizza in an order with multiple pizzas was edited. After group talk, mention
                 return ctx.SaveChanges() == 1;
             }
         }
@@ -138,10 +139,10 @@ namespace POS.Services
             using (var ctx = new ApplicationDbContext())
             {
                 var entity = ctx
-                    .Pizzas
+                    .PizzaTable
                     .Single(e => e.PizzaId == pizzaId);//EAC: && e.OwnerId == _userId); -- do we want to restrict who can see it here (e.g. a customer can only see their own pizzas but employee/manager can see everyone's)-- if so, what is the correct OwnerId name now?
 
-                ctx.Pizzas.Remove(entity);
+                ctx.PizzaTable.Remove(entity);
 
                 return ctx.SaveChanges() == 1;
             }

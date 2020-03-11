@@ -12,10 +12,10 @@ namespace POS.Models.PizzaModels
     {
         public int PizzaId { get; set; }
         public int OrderId { get; set; }
-        public Order Order { get; set; }
+        //public Order Order { get; set; }
 
 
-        public string EmployeeId { get; set; }//EAC: do we want to be able to edit EmployeeId in a pizza? I think probably not
+        public int UserId { get; set; }//EAC: do we want to be able to edit EmployeeId in a pizza? I think probably not
         public int CustomerId { get; set; }//EAC: do we want to be able to edit CustomerId in a pizza? I think probably not
 
         public bool Cheese { get; set; }
