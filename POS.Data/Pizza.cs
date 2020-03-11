@@ -23,8 +23,7 @@ namespace POS.Data
         public int OrderId { get; set; }
         public virtual Order Order { get; set; }
 
-
-        public string EmployeeId { get; set; }
+        public int UserId { get; set; }
         public int CustomerId { get; set; }
         [Required]
         public bool Cheese { get; set; }

@@ -26,8 +26,8 @@ namespace POS.Models.PizzaModels
         public Pizza.ToppingType? TypeOfToppingFive { get; set; }
         public bool Cheese { get; set; }
         public string Comment { get; set; }
-        public int CustomerId { get; set; }//EAC: would we ever need this since we have OrderId already linked to CustomerId?
-        public int EmployeeId { get; set; }//EAC: would we need this since we have OrderId already linked to EmployeedId?
+        public int UserId { get; set; }
+        public int CustomerId { get; set; }
         public int OrderId { get; set; }
     }
 }
