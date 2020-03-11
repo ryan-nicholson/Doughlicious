@@ -56,9 +56,6 @@ namespace POS.Data
         public int OrderId { get; set; }
         public virtual Order Order { get; set; }
 
-        [ForeignKey(nameof(POSUser))]
-        public int UserId { get; set; }
-        public virtual POSUser POSUser { get; set; }
 
         [ForeignKey(nameof(Pizza))]
         public int PizzaId { get; set; }

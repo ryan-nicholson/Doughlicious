@@ -76,6 +76,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="UserModels\UserCreate.cs" />
+    <Compile Include="UserModels\UserDelete.cs" />
+    <Compile Include="UserModels\UserEdit.cs" />
     <Compile Include="UserModels\UserListItem.cs" />
     <Compile Include="OrderModels\OrderCreate.cs" />
     <Compile Include="OrderModels\OrderDetail.cs" />
