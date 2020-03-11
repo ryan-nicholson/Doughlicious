@@ -11,45 +11,68 @@ namespace POS.Services
     public class OrderService
     {
         // Creating a field to tie the order to a reference object (employee making order)
-        private readonly string _employeeId;
+        private readonly int _userId;
 
-        public OrderService(string employeeId)
+        public OrderService(int userId)
         {
-            _employeeId = employeeId;
+            _userId = userId;
         }
 
         public bool CreateOrder(OrderCreate model)
         {
-            var order = new Order()
+            var order = new Order();
+            using (var ctx = new ApplicationDbContext())
+
             {
-                EmployeeId = _employeeId,
-                CustomerId = model.CustomerId,
-                PizzaCollection = model.PizzaCollection,
-                Delivery = model.Delivery,
-                //Pending = model.Pending,  does it need to be defined when the order is created or only when listed?
-                OrderTime = DateTime.Now,
-                Price = model.Price
+
+
+                if (ctx.UserTable.Find(_userId).TypeUser == POSUser.UserTypes.Customer)
+                {
+
+                    {
+                        order.UserId = _userId;
+                        order.CustomerId = _userId;
+                        order.Delivery = model.Delivery;
+                        order.Pending = true;
+                        order.OrderTime = DateTime.Now;
+                        order.Price = model.Price;
+                    };
+                }
+                else
+                {
+
+                    {
+
+                        order.UserId = _userId;
+                        order.CustomerId = model.CustomerId;
+                        order.Delivery = model.Delivery;
+                        order.Pending = true;
+                        order.OrderTime = DateTime.Now;
+                        order.Price = model.Price;
+
+                    };
+
+                }
             };
 
             var dbContext = new ApplicationDbContext();
 
-            dbContext.Orders.Add(order);
+            dbContext.OrderTable.Add(order);
             return dbContext.SaveChanges() == 1;
 
         }
 
-        // Get all orders belnging to employee
+
         public IEnumerable<OrderListItem> GetAllOrders()
         {
             var dbContext = new ApplicationDbContext();
 
-            var query = dbContext.Orders
-                .Where(x => x.EmployeeId == _employeeId)
+            var query = dbContext.OrderTable
+                .Where(x => x.UserId == _userId)
                 .Select(x => new OrderListItem
                 {
                     OrderId = x.OrderId,
-                    CustomerId = x.CustomerId,
-                    PizzaCollection = x.PizzaCollection,
+                    UserId = x.UserId,
                     Delivery = x.Delivery,
                     Pending = x.Pending,
                     OrderTime = x.OrderTime,
@@ -60,3 +83,4 @@ namespace POS.Services
         }
     }
 }
+

@@ -83,7 +83,9 @@
     <Compile Include="UserModels\UserListItem.cs" />
     <Compile Include="OrderModels\OrderCreate.cs" />
     <Compile Include="OrderModels\OrderListItem.cs" />
+    <Compile Include="PizzaModels\PizzaDetail.cs" />
     <Compile Include="PizzaModels\PizzaCreate.cs" />
+    <Compile Include="PizzaModels\PizzaEdit.cs" />
     <Compile Include="PizzaModels\PizzaListItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
