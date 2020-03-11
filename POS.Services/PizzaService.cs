@@ -25,7 +25,7 @@ namespace POS.Services
                 {
                     UserId = _userId,
                     CustomerId = model.CustomerId,
-                    OrderId = model.OrderId,
+                    OrderPizzasId = model.OrderPizzasId,
                     Cheese= model.Cheese,
                     Comment = model.Comment,
                     TypeOfCrust = model.TypeOfCrust,

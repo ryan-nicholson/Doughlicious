@@ -66,7 +66,7 @@ namespace POS.WebAPI.Controllers
             return Ok(newUser);
         }
         [HttpPut]
-        public IHttpActionResult UpdateUser(string email, POSUser.UserTypes userTypes)
+        public IHttpActionResult UpdateUser(UserEdit userEdit)
         {
             if (userTypes == POSUser.UserTypes.Customer)
             {
