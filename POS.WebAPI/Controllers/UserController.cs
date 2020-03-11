@@ -7,6 +7,7 @@ using static POS.Data.POSUser;
 using POS.Models.UserModels;
 using POS.Models.EmployeeModels;
 
+
 namespace POS.WebAPI.Controllers
 {
     [Authorize]
@@ -21,6 +22,7 @@ namespace POS.WebAPI.Controllers
             return Ok(users);
         }
         [HttpGet]
+
         public IHttpActionResult GetUserByEmail(UserGetEmail email)
         {
             UserService userService = CreateUserService();
@@ -31,18 +33,23 @@ namespace POS.WebAPI.Controllers
         public IHttpActionResult GetUsersByRole(UserGetUserType userTypes)
         {
             if (userTypes.typeUser == POSUser.UserTypes.Customer)
+
             {
                 UserService userService = CreateUserService();
                 var users = userService.GetCustomers();
                 return Ok(users);
             }
+
             if (userTypes.typeUser == POSUser.UserTypes.Employee)
+
             {
                 UserService userService = CreateUserService();
                 var users = userService.GetEmployees();
                 return Ok(users);
             }
+
             if (userTypes.typeUser == POSUser.UserTypes.Manager)
+
             {
                 UserService userService = CreateUserService();
                 var users = userService.GetManagers();
@@ -51,15 +58,19 @@ namespace POS.WebAPI.Controllers
             return BadRequest();
         }
         [HttpPost]
+
         public IHttpActionResult Post(UserCreate model)
+
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var service = CreateUserService();
+
             var newUser = service.CreatePOSUser(model.Email);
 
             if (!service.CreatePOSUser(model.Email))
+
                 return InternalServerError();
 
             return Ok(newUser);
@@ -67,6 +78,7 @@ namespace POS.WebAPI.Controllers
         [HttpPut]
         public IHttpActionResult UpdateUser(UserEdit userEdit)
         {
+
             if (userEdit.userType == POSUser.UserTypes.Customer)
             {
                 UserService userService = CreateUserService();
@@ -92,6 +104,7 @@ namespace POS.WebAPI.Controllers
         {
             UserService userService = CreateUserService();
             var user = userService.DeleteUser(delete.Email);
+
             if (user)
             {
                 return Ok();

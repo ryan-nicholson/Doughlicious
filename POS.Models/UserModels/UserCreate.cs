@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace POS.Models.EmployeeModels
 {
+
     public class UserCreate
     {
         public string Email { get; set; }
     }
+
 }
