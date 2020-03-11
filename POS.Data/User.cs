@@ -15,6 +15,6 @@ namespace POS.Data
         public string Name { get; set; }
         public Guid UserGuid { get; set; }
         public UserTypes TypeUser { get; set; }
-        public ICollection<Order> UserOrders { get; set; }
+        public virtual ICollection<Order> OrderCollection { get; set; }
     }
 }

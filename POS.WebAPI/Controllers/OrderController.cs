@@ -14,25 +14,16 @@ namespace POS.WebAPI.Controllers
 {
     public class OrderController : ApiController
     {
-        private int GetUserByGuid()
+        private int GetUserIdByGuid()
         {
             using (var ctx = new ApplicationDbContext())
             {
-                var query =
-                    ctx
-                        .UserTable
-                        .Where(e => e.UserGuid == Guid.Parse(User.Identity.GetUserId()))
-                        .Select(
-                            e =>
-                                new UserListItem
-                                {
+                
+                var query = ctx.UserTable.Find(Guid.Parse(User.Identity.GetUserId()));
+                var userId = query.UserId;
+                        
 
-                                    UserId = e.UserId
-
-                                }
-                        ); ;
-
-                return query.ToArray()[0].UserId;
+                return userId;
             }
         }
         public IHttpActionResult Get()
@@ -57,8 +48,8 @@ namespace POS.WebAPI.Controllers
 
         private OrderService CreateOrderService()
         {
-            
-            var orderService = new OrderService(GetUserByGuid());
+            var userGuid = GetUserIdByGuid();
+            var orderService = new OrderService(userGuid);
             return orderService;
         }
     }
