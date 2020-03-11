@@ -1,16 +1,13 @@
-﻿using POS.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace POS.Models.EmployeeModels
+namespace POS.Models.UserModels
 {
-
-    public class UserCreate
+    public class UserDelete
     {
         public string Email { get; set; }
     }
-
 }

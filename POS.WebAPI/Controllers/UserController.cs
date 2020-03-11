@@ -1,17 +1,17 @@
 ﻿using POS.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using Microsoft.AspNet.Identity;
-using POS.Models.EmployeeModels;
 using POS.Data;
+using static POS.Data.POSUser;
+using POS.Models.UserModels;
+using POS.Models.EmployeeModels;
+
 
 namespace POS.WebAPI.Controllers
 {
     [Authorize]
+
     public class UserController : ApiController
     {
         [HttpGet]
@@ -22,28 +22,34 @@ namespace POS.WebAPI.Controllers
             return Ok(users);
         }
         [HttpGet]
-        public IHttpActionResult GetUserByEmail(string email)
+
+        public IHttpActionResult GetUserByEmail(UserGetEmail email)
         {
             UserService userService = CreateUserService();
-            var users = userService.GetUserByGuid(email);
+            var users = userService.GetUserByGuid(email.Email);
             return Ok(users);
         }
         [HttpGet]
-        public IHttpActionResult GetUsersByRole(POSUser.UserTypes userTypes)
+        public IHttpActionResult GetUsersByRole(UserGetUserType userTypes)
         {
-            if (userTypes == POSUser.UserTypes.Customer)
+            if (userTypes.typeUser == POSUser.UserTypes.Customer)
+
             {
                 UserService userService = CreateUserService();
                 var users = userService.GetCustomers();
                 return Ok(users);
             }
-            if (userTypes == POSUser.UserTypes.Employee)
+
+            if (userTypes.typeUser == POSUser.UserTypes.Employee)
+
             {
                 UserService userService = CreateUserService();
                 var users = userService.GetEmployees();
                 return Ok(users);
             }
-            if (userTypes == POSUser.UserTypes.Manager)
+
+            if (userTypes.typeUser == POSUser.UserTypes.Manager)
+
             {
                 UserService userService = CreateUserService();
                 var users = userService.GetManagers();
@@ -52,15 +58,19 @@ namespace POS.WebAPI.Controllers
             return BadRequest();
         }
         [HttpPost]
-        public IHttpActionResult Post(string email)
+
+        public IHttpActionResult Post(UserCreate model)
+
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var service = CreateUserService();
-            var newUser = service.CreatePOSUser(email);
 
-            if (!service.CreatePOSUser(email))
+            var newUser = service.CreatePOSUser(model.Email);
+
+            if (!service.CreatePOSUser(model.Email))
+
                 return InternalServerError();
 
             return Ok(newUser);
@@ -68,31 +78,33 @@ namespace POS.WebAPI.Controllers
         [HttpPut]
         public IHttpActionResult UpdateUser(UserEdit userEdit)
         {
-            if (userTypes == POSUser.UserTypes.Customer)
+
+            if (userEdit.userType == POSUser.UserTypes.Customer)
             {
                 UserService userService = CreateUserService();
-                var user = userService.ChangeUserTypeCustomer(email);
+                var user = userService.ChangeUserTypeCustomer(userEdit.Email);
                 return Ok(user);
             }
-            if (userTypes == POSUser.UserTypes.Employee)
+            if (userEdit.userType == POSUser.UserTypes.Employee)
             {
                 UserService userService = CreateUserService();
-                var user = userService.ChangeUserTypeEmployee(email);
+                var user = userService.ChangeUserTypeEmployee(userEdit.Email);
                 return Ok(user);
             }
-            if (userTypes == POSUser.UserTypes.Manager)
+            if (userEdit.userType == POSUser.UserTypes.Manager)
             {
                 UserService userService = CreateUserService();
-                var user = userService.ChangeUserTypeManager(email);
+                var user = userService.ChangeUserTypeManager(userEdit.Email);
                 return Ok(user);
             }
-            return BadRequest(userTypes.ToString());
+            return BadRequest(userEdit.userType.ToString());
         }
         [HttpDelete]
-        public IHttpActionResult RemoveUser(string email)
+        public IHttpActionResult RemoveUser(UserDelete delete)
         {
             UserService userService = CreateUserService();
-            var user = userService.DeleteUser(email);
+            var user = userService.DeleteUser(delete.Email);
+
             if (user)
             {
                 return Ok();
