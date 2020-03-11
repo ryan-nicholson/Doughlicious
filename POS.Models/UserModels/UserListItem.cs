@@ -12,5 +12,7 @@ namespace POS.Models.EmployeeModels
         public int UserId { get; set; }
         public Guid UserGuid { get; set; }
         public string Name { get; set; }
+
+        public string Email { get; set; }
     }
 }

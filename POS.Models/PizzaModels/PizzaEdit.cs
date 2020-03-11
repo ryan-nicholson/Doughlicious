@@ -1,22 +1,26 @@
+
 ﻿using POS.Data;
 using System;
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static POS.Data.Pizza;
+
 
 namespace POS.Models.PizzaModels
 {
     public class PizzaEdit
     {
+
+        public enum CrustType { pan }
+        public enum ToppingType { pepperoni }
+        public enum SauceType { red }
+        public enum SizeType { XXL }
         public int PizzaId { get; set; }
+
         public int OrderId { get; set; }
-        //public Order Order { get; set; }
-
-
-        public int UserId { get; set; }//EAC: do we want to be able to edit EmployeeId in a pizza? I think probably not
-        public int CustomerId { get; set; }//EAC: do we want to be able to edit CustomerId in a pizza? I think probably not
+       
 
         public bool Cheese { get; set; }
 
@@ -36,6 +40,8 @@ namespace POS.Models.PizzaModels
 
         public ToppingType? TypeOfToppingFive { get; set; }
 
+
         public string Comment { get; set; }//We need to set default value to ""
+
     }
 }

@@ -26,7 +26,6 @@ namespace POS.Services
                 { 
                     UserId = _userId,
                     CustomerId = model.CustomerId,
-                    OrderId = model.OrderId,
                     Cheese= model.Cheese,
                     Comment = model.Comment,
                     TypeOfCrust = model.TypeOfCrust,
@@ -132,7 +131,6 @@ namespace POS.Services
             }
         }
 
-
         //Delete Pizzas -EAC
         public bool DeletePizza(int pizzaId)
         {
@@ -147,6 +145,5 @@ namespace POS.Services
                 return ctx.SaveChanges() == 1;
             }
         }
-
     }
 }

@@ -24,6 +24,6 @@ namespace POS.Models.PizzaModels
         public string Comment { get; set; }
         public int UserId { get; set; }
         public int CustomerId { get; set; }
-        public int OrderId { get; set; }
+        public int OrderPizzasId { get; set; }
     }
 }
