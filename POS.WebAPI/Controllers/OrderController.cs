@@ -16,12 +16,11 @@ namespace POS.WebAPI.Controllers
     {
         private int GetUserIdByGuid()
         {
-            using (var ctx = new ApplicationDbContext())
+            using (var dbContext = new ApplicationDbContext())
             {
-                
-                var query = ctx.UserTable.Find(Guid.Parse(User.Identity.GetUserId()));
+                var query = dbContext.UserTable
+                   .Find(Guid.Parse(User.Identity.GetUserId()));
                 var userId = query.UserId;
-                        
 
                 return userId;
             }
@@ -51,6 +50,30 @@ namespace POS.WebAPI.Controllers
             var userGuid = GetUserIdByGuid();
             var orderService = new OrderService(userGuid);
             return orderService;
+        }
+
+        public IHttpActionResult Put(/*POSUser user, */OrderEdit order)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var service = CreateOrderService(/*user*/);
+
+            if (!service.UpdateOrder(order))
+                return InternalServerError();
+
+            return Ok();
+        }
+
+        public IHttpActionResult Delete(/*Employee employee, */int orderId)
+        {
+            var service = CreateOrderService(/*employee*/);
+
+            if (!service.DeleteOrder(orderId))
+                return InternalServerError();
+
+            return Ok();
+
         }
     }
 }
