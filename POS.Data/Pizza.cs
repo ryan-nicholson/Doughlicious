@@ -26,13 +26,13 @@ namespace POS.Data
 
         public string EmployeeId { get; set; }
         public int CustomerId { get; set; }
-
+        [Required]
         public bool Cheese { get; set; }
-
+        [Required]
         public CrustType TypeOfCrust { get; set; }
-
+        [Required]
         public SauceType TypeOfSauce { get; set; }
-
+        [Required]
         public SizeType TypeOfSize { get; set; }
 
         public ToppingType? TypeOfToppingOne { get; set; }
@@ -44,9 +44,15 @@ namespace POS.Data
         public ToppingType? TypeOfToppingFour { get; set; }
 
         public ToppingType? TypeOfToppingFive { get; set; }
-
+        //EAC: do we make Comment required?
         public string Comment { get; set; }//We need to set default value to ""
 
+        //EAC: do we want to include a created and modified time for pizza? or only order? I think can make sense on a pizza basis also if only one pizza in a multi-pizza order was modified
+        [Required]
+        public DateTimeOffset CreatedUtc { get; set; }
+
+        public DateTimeOffset? ModifiedUtc { get; set; }
+        
     }
 
 
