@@ -20,7 +20,7 @@ namespace POS.Data
         public int PizzaId { get; set; }
 
         [ForeignKey(nameof(OrderPizzas))]
-        public int OrderPizzasId { get; set; }
+        public int OrderId { get; set; }
         public OrderPizzas OrderPizzas { get; set; }
 
         public int UserId { get; set; }

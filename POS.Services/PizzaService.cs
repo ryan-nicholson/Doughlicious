@@ -25,7 +25,6 @@ namespace POS.Services
                 {
                     UserId = _userId,
                     CustomerId = model.CustomerId,
-                    OrderId = model.OrderId,
                     Cheese= model.Cheese,
                     Comment = model.Comment,
                     TypeOfCrust = model.TypeOfCrust,
@@ -66,31 +65,16 @@ namespace POS.Services
                 return query.ToArray();
             }
         }
-        public PizzaDetail GetPizzaById(int id)
-        {
-            using (var ctx = new ApplicationDbContext())
-            {
-                var entity =
-                    ctx
-                        .Pizzas
-                        .Single(e => e.PizzaId == id);
-                return
-                    new PizzaDetail
-                    {
-                        PizzaId = entity.PizzaId,
-                        
-                    };
-            }
-        }
+        
         public bool UpdatePizza(PizzaEdit model)
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var entity =
                     ctx
-                        .Customers
-                        .Single(e => e.CustomerId == model.PizzaId);
-                entity.Name = model.Name;
+                        .PizzaTable
+                        .Single(e => e.PizzaId == model.PizzaId);
+                entity.PizzaId = model.PizzaId;
                
 
                 return ctx.SaveChanges() == 1;
@@ -102,10 +86,10 @@ namespace POS.Services
             {
                 var entity =
                     ctx
-                        .Customers
+                        .PizzaTable
                         .Single(e => e.PizzaId == PizzaId);
 
-                ctx.Pizza.Remove(entity);
+                ctx.PizzaTable.Remove(entity);
                 return ctx.SaveChanges() == 1;
             }
         }

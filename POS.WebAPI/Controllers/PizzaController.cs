@@ -1,15 +1,11 @@
-
 using Microsoft.AspNet.Identity;
-using System;
-using POS.Models.PizzaModels;
-using POS.Services;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
 using POS.Data;
 using POS.Models.EmployeeModels;
+using POS.Models.PizzaModels;
+using POS.Services;
+using System;
+using System.Linq;
+using System.Web.Http;
 
 namespace POS.WebAPI.Controllers
 {
@@ -67,7 +63,7 @@ namespace POS.WebAPI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var service = CreatePizzaService(pizza);
+            var service = CreatePizzaService();
 
             if (!service.UpdatePizza(pizza))
                 return InternalServerError();
