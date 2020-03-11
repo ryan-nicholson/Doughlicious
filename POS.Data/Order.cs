@@ -13,14 +13,18 @@ namespace POS.Data
         [Key]
         public int OrderId { get; set; }
 
-        [ForeignKey(nameof(Customer))]
+
+        [ForeignKey(nameof(User))]
+        public int UserId { get; set; }
+        public virtual POSUser User { get; set; }
+
+
         public int CustomerId { get; set; }
-        public virtual Customer Customer { get; set; }
+        //public virtual Customer Customer { get; set; }
 
-
-        [ForeignKey(nameof(Employee))]
-        public string EmployeeId { get; set; }
-        public virtual Employee Employee { get; set; }
+        //[ForeignKey(nameof(Employee))]
+        //public string EmployeeId { get; set; }
+        //public virtual Employee Employee { get; set; }
 
 
         //[ForeignKey(nameof(Pizzas))]
