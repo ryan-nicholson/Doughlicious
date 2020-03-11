@@ -212,17 +212,10 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-
-    <Compile Include="Controllers\EmployeeController.cs" />
-
-    <Compile Include="Controllers\CustomerController.cs" />
-
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-
     <Compile Include="Controllers\OrderController.cs" />
-
     <Compile Include="Controllers\PizzaController.cs" />
-
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -402,24 +395,24 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\POS.Data\POS.Data.csproj">
-      <Project>{6d821ad0-943c-43ac-b404-3c3dfff60a96}</Project>
-      <Name>POS.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\POS.Models\POS.Models.csproj">
-      <Project>{b18efa01-a2b2-4654-961d-61a9ee50a1fc}</Project>
-      <Name>POS.Models</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\POS.Services\POS.Services.csproj">
-      <Project>{0fff9fef-4961-450e-8d4a-819483c42e5f}</Project>
-      <Name>POS.Services</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\POS.Data\POS.Data.csproj">
+      <Project>{6D821AD0-943C-43AC-B404-3C3DFFF60A96}</Project>
+      <Name>POS.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\POS.Models\POS.Models.csproj">
+      <Project>{B18EFA01-A2B2-4654-961D-61A9EE50A1FC}</Project>
+      <Name>POS.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\POS.Services\POS.Services.csproj">
+      <Project>{0FFF9FEF-4961-450E-8D4A-819483C42E5F}</Project>
+      <Name>POS.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
