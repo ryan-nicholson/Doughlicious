@@ -21,7 +21,7 @@ namespace POS.Data
 
         [ForeignKey(nameof(Order))]
         public int OrderId { get; set; }
-        public Order Order { get; set; }
+        public virtual Order Order { get; set; }
 
 
         public string EmployeeId { get; set; }
@@ -51,7 +51,7 @@ namespace POS.Data
         [Required]
         public DateTimeOffset CreatedUtc { get; set; }
 
-        public DateTimeOffset? ModifiedUtc { get; set; }
+        //public DateTimeOffset? ModifiedUtc { get; set; } EAC: can add this after MVP
         
     }
 
