@@ -5,12 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace POS.Models.EmployeeModels
+namespace POS.Models.UserModels
 {
-
-    public class UserCreate
+    public class UserGetUserType
     {
-        public string Email { get; set; }
+        public POSUser.UserTypes typeUser { get; set; }
     }
-
 }

@@ -20,6 +20,7 @@ namespace POS.Data
 
         public UserTypes TypeUser { get; set; }
 
-        public ICollection<Order> UserOrders { get; set; }
+        public virtual ICollection<Order> OrderCollection { get; set; }
+
     }
 }
