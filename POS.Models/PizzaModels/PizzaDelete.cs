@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace POS.Models.PizzaModels
 {
-    class PizzaDelete
+    public class PizzaDelete
     {
+        public int PizzaId { get; set; }
+
     }
 }
