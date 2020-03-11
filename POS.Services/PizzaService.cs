@@ -70,5 +70,48 @@ namespace POS.Services
                 return query.ToArray();
             }
         }
+        public PizzaDetail GetPizzaById(int id)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Pizzas
+                        .Single(e => e.PizzaId == id);
+                return
+                    new PizzaDetail
+                    {
+                        PizzaId = entity.PizzaId,
+                        
+                    };
+            }
+        }
+        public bool UpdatePizza(PizzaEdit model)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Customers
+                        .Single(e => e.CustomerId == model.PizzaId);
+                entity.Name = model.Name;
+               
+
+                return ctx.SaveChanges() == 1;
+            }
+        }
+        public bool DeletePizza(int PizzaId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Customers
+                        .Single(e => e.PizzaId == PizzaId);
+
+                ctx.Pizza.Remove(entity);
+                return ctx.SaveChanges() == 1;
+            }
+        }
     }
 }
