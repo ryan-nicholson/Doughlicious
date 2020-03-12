@@ -25,9 +25,7 @@ namespace POS.WebAPI.Controllers
                             e =>
                                 new UserListItem
                                 {
-
                                     UserId = e.UserId
-
                                 }
                         ); ;
 
