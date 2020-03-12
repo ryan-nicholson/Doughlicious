@@ -19,7 +19,7 @@ namespace POS.Models.OrderModels
 
         public bool Pending { get; set; }
 
-        public DateTime OrderTime { get; set; }
+        public DateTimeOffset OrderTime { get; set; }
 
         public double Price { get; set; }
     }
