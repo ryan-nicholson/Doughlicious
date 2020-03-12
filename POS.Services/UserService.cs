@@ -73,7 +73,7 @@ namespace POS.Services
                 var user = ctx.UserTable.Single(e => e.Email == email);
 
 
-                return Guid.Parse(user.Id);
+                return Guid.Parse(user.Email);
             }
         }
         public UserListItem GetUserByGuid(string email)
