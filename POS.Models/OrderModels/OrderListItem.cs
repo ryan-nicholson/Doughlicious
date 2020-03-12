@@ -12,11 +12,11 @@ namespace POS.Models.OrderModels
         public int OrderId { get; set; }
 
         // Do we want to show the pizzas?
-        public ICollection<Pizza> Pizzas { get; set; }
+        //public ICollection<Pizza> Pizzas { get; set; }
 
         public bool Pending { get; set; }
 
-        public DateTime OrderTime { get; set; }
+        public DateTimeOffset OrderTime { get; set; }
 
         public int UserId { get; set; }
 

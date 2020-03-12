@@ -45,6 +45,11 @@ namespace POS.Data
 
         public ToppingType? TypeOfToppingFive { get; set; }
 
+        //EAC: do we make Comment required?
+        public string Comment { get; set; }
+       //We need to set default value to ""
+
+
         private string _comment;
         public string Comment
         {

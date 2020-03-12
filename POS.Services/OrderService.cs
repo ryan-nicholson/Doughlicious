@@ -10,6 +10,8 @@ namespace POS.Services
 {
     public class OrderService
     {
+        private readonly POSUser user = new POSUser();
+
         // Creating a field to tie the order to a reference object (employee making order)
         private readonly int _userId;
 
@@ -31,7 +33,7 @@ namespace POS.Services
                         order.CustomerId = _userId;
                         order.Delivery = model.Delivery;
                         order.Pending = true;
-                        order.OrderTime = DateTime.Now;
+                        order.OrderTime = DateTimeOffset.Now;
                         order.Price = model.Price;
                     };
                 }
@@ -42,7 +44,7 @@ namespace POS.Services
                         order.CustomerId = model.CustomerId;
                         order.Delivery = model.Delivery;
                         order.Pending = true;
-                        order.OrderTime = DateTime.Now;
+                        order.OrderTime = DateTimeOffset.Now;
                         order.Price = model.Price;
                     };
                 }
@@ -55,25 +57,154 @@ namespace POS.Services
             }
         }
 
+        // Get all orders for user unless manager
+        public IEnumerable<OrderListItem> GetAllOrders()
+        {
+            using (var dbContext = new ApplicationDbContext())
+            {
+                if (user.TypeUser == POSUser.UserTypes.Manager)
+                {
+                    // If user is a manager then they will be displayed all orders that exist, showing the UserId for the user that placed the order
+                    var query = dbContext.OrderTable
+                        .Select(x => new OrderListItem
+                        {
+                            OrderId = x.OrderId,
+                            CustomerId = x.CustomerId,
+                            UserId = x.UserId,
+                            Delivery = x.Delivery,
+                            Pending = x.Pending,
+                            OrderTime = x.OrderTime,
+                            Price = x.Price
+                        });
+
+                    return query.ToArray();
+                }
+                else
+                {
+                    // If user is an employee or customer they will be displayed all delivery orders that they have placed
+                    var query = dbContext.OrderTable
+                        .Where(x => x.UserId == _userId)
+                        .Select(x => new OrderListItem
+                        {
+                            OrderId = x.OrderId,
+                            CustomerId = x.CustomerId,
+                            Delivery = x.Delivery,
+                            Pending = x.Pending,
+                            OrderTime = x.OrderTime,
+                            Price = x.Price
+                        });
+
+                    return query.ToArray();
+                }
+
+            }
+        }
+
+        /*
         public IEnumerable<OrderListItem> GetAllOrders()
         {
             using (var dbContext = new ApplicationDbContext())
             {
                 var query = dbContext.OrderTable
-                    .Where(x => x.UserId == _userId)
-                    .Select(x => new OrderListItem
-                    {
-                        OrderId = x.OrderId,
-                        CustomerId = x.CustomerId,
-                        // Do we want to show pizzas?
-                        Pizzas = x.Pizzas,
-                        Delivery = x.Delivery,
-                        Pending = x.Pending,
-                        OrderTime = x.OrderTime,
-                        Price = x.Price
-                    });
+                      .Where(x => x.UserId == _userId)
+                      .Select(x => new OrderListItem
+                      {
+                          OrderId = x.OrderId,
+                          CustomerId = x.CustomerId,
+                          // Do we want to show pizzas?
+                          //Pizzas = x.Pizzas,
+                          Delivery = x.Delivery,
+                          Pending = x.Pending,
+                          OrderTime = x.OrderTime,
+                          Price = x.Price
+                      });
 
                 return query.ToArray();
+            }
+        }
+        */
+
+        // Get all pending orders for user unless manager
+        public IEnumerable<OrderListItem> GetAllPendingOrders()
+        {
+            using (var dbContext = new ApplicationDbContext())
+            {
+                if (user.TypeUser == POSUser.UserTypes.Manager)
+                {
+                    // If user is a manager then they will be displayed all pending orders that exist, showing the UserId for the user that placed the order
+                    var query = dbContext.OrderTable
+                        .Where(x => x.Pending == true)
+                        .Select(x => new OrderListItem
+                        {
+                            OrderId = x.OrderId,
+                            CustomerId = x.CustomerId,
+                            UserId = x.UserId,
+                            Delivery = x.Delivery,
+                            OrderTime = x.OrderTime,
+                            Price = x.Price
+                        });
+
+                    return query.ToArray();
+                }
+                else
+                {
+                    // If user is an employee or customer they will be displayed all pending orders that they have placed
+                    var query = dbContext.OrderTable
+                        .Where(x => x.UserId == _userId && x.Pending == true)
+                        .Select(x => new OrderListItem
+                        {
+                            OrderId = x.OrderId,
+                            CustomerId = x.CustomerId,
+                            Delivery = x.Delivery,
+                            //Pending = x.Pending,
+                            OrderTime = x.OrderTime,
+                            Price = x.Price
+                        });
+
+                    return query.ToArray();
+                }
+            }
+        }
+
+        // Get all delivery orders for user unless manager
+        public IEnumerable<OrderListItem> GetAllDeliveryOrders()
+        {
+            using (var dbContext = new ApplicationDbContext())
+            {
+                if (user.TypeUser == POSUser.UserTypes.Manager)
+                {
+                    // If user is a manager then they will be displayed all delivery orders that exist, showing the UserId for the user that placed the order
+                    var query = dbContext.OrderTable
+                        .Where(x => x.Delivery == true)
+                        .Select(x => new OrderListItem
+                        {
+                            OrderId = x.OrderId,
+                            CustomerId = x.CustomerId,
+                            UserId = x.UserId,
+                            Pending = x.Pending,
+                            OrderTime = x.OrderTime,
+                            Price = x.Price
+                        });
+
+                    return query.ToArray();
+                }
+                else
+                {
+                    // If user is an employee or customer they will be displayed all delivery orders that they have placed
+                    var query = dbContext.OrderTable
+                        .Where(x => x.UserId == _userId && x.Delivery == true)
+                        .Select(x => new OrderListItem
+                        {
+                            OrderId = x.OrderId,
+                            CustomerId = x.CustomerId,
+                            //Delivery = x.Delivery,
+                            Pending = x.Pending,
+                            OrderTime = x.OrderTime,
+                            Price = x.Price
+                        });
+
+                    return query.ToArray();
+                }
             }
         }
 
@@ -83,6 +214,26 @@ namespace POS.Services
             {
                 var entity = dbContext.OrderTable
                     .Single(x => x.OrderId == orderId && x.UserId == _userId);
+
+                return new OrderDetail
+                {
+                    OrderId = entity.OrderId,
+                    CustomerId = entity.CustomerId,
+                    Pizzas = entity.Pizzas,
+                    Delivery = entity.Delivery,
+                    Pending = entity.Pending,
+                    OrderTime = entity.OrderTime,
+                    Price = entity.Price
+                };
+            }
+        }
+
+        public OrderDetail GetOrderByCustomer(int customerId)
+        {
+            using (var dbContext = new ApplicationDbContext())
+            {
+                var entity = dbContext.OrderTable
+                    .Single(x => x.CustomerId == customerId && x.UserId == _userId);
 
                 return new OrderDetail
                 {
@@ -108,6 +259,7 @@ namespace POS.Services
                 entity.Delivery = model.Delivery;
                 entity.Pending = model.Pending;
                 entity.Price = model.Price;
+                entity.ModifiedOrderTime = DateTimeOffset.Now;
 
                 return dbContext.SaveChanges() == 1;
             }
