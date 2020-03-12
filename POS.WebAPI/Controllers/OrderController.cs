@@ -12,6 +12,7 @@ using System.Web.Http;
 
 namespace POS.WebAPI.Controllers
 {
+    [Authorize]
     public class OrderController : ApiController
     {
         [HttpGet]
