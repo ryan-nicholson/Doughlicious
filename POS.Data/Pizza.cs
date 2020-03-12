@@ -44,7 +44,8 @@ namespace POS.Data
 
         public ToppingType? TypeOfToppingFive { get; set; }
         //EAC: do we make Comment required?
-        public string Comment { get; set; }//We need to set default value to ""
+        public string Comment { get; set; }
+       //We need to set default value to ""
 
 
         //EAC: do we want to include a created and modified time for pizza? or only order? I think can make sense on a pizza basis also if only one pizza in a multi-pizza order was modified

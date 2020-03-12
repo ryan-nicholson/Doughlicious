@@ -52,12 +52,12 @@ namespace POS.WebAPI.Controllers
             return orderService;
         }
 
-        public IHttpActionResult Put(/*POSUser user, */OrderEdit order)
+        public IHttpActionResult Put(OrderEdit order)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var service = CreateOrderService(/*user*/);
+            var service = CreateOrderService();
 
             if (!service.UpdateOrder(order))
                 return InternalServerError();
@@ -65,9 +65,9 @@ namespace POS.WebAPI.Controllers
             return Ok();
         }
 
-        public IHttpActionResult Delete(/*Employee employee, */int orderId)
+        public IHttpActionResult Delete(int orderId)
         {
-            var service = CreateOrderService(/*employee*/);
+            var service = CreateOrderService();
 
             if (!service.DeleteOrder(orderId))
                 return InternalServerError();
