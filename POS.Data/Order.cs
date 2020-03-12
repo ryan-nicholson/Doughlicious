@@ -39,9 +39,10 @@ namespace POS.Data
         public bool Pending { get; set; }
 
         // Added a set property to OrderTime, couldn't set the order time for the order when being created
-        public DateTime OrderTime { get; set; }
+        public DateTimeOffset OrderTime { get; set; }
 
-        // Added a set property to Price, couldn't set the price for the order when being created
+        public DateTimeOffset? ModifiedOrderTime { get; set; }
+
         public double Price { get; set; }
     }
 }
