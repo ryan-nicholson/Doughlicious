@@ -13,6 +13,7 @@ namespace POS.WebAPI.Controllers
     public class PizzaController : ApiController
     {
 
+
         private int GetUserByGuid()
         {
             using (var ctx = new ApplicationDbContext())
@@ -20,20 +21,14 @@ namespace POS.WebAPI.Controllers
                 var query =
                     ctx
                         .UserTable
-                        .Where(e => e.UserGuid == Guid.Parse(User.Identity.GetUserId()))
-                        .Select(
-                            e =>
-                                new UserListItem
-                                {
-                                    UserId = e.UserId
-                                }
-                        ); ;
+                        .Single(e => e.UserGuid == Guid.Parse(User.Identity.GetUserId()));
 
-                return query.ToArray()[0].UserId;
+                return query.UserId;
+
             }
         }
         [HttpGet]
-        public IHttpActionResult Get()
+        public IHttpActionResult Get(string getall)
         {
             PizzaService pizzaService = CreatePizzaService();
             var pizzas = pizzaService.GetPizzas();
@@ -41,7 +36,7 @@ namespace POS.WebAPI.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult GetPizzaByPizzaId(PizzaDetail pizzaId)
+        public IHttpActionResult GetPizzaByPizzaId(PizzaDetail pizzaId, string getbyid)
         {
             PizzaService pizzaService = CreatePizzaService();
             var pizza = pizzaService.GetPizzaByPizzaId(pizzaId.PizzaId);
@@ -49,7 +44,7 @@ namespace POS.WebAPI.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult GetPizzasByUserId()
+        public IHttpActionResult GetPizzasByUserId(string getbyuser)
         {
             PizzaService pizzaService = CreatePizzaService();
             var pizza = pizzaService.GetPizzasByUserId(GetUserByGuid());
@@ -100,31 +95,6 @@ namespace POS.WebAPI.Controllers
 
             return Ok();
         }
-        private UserListItem GetUserByGuid(string email)
-        {
-            using (var ctx = new ApplicationDbContext())
-            {
 
-                var user = ctx.UserTable.Find(email);
-                var query =
-                    ctx
-                        .UserTable
-                        .Where(e => e.UserGuid == user.UserGuid)
-                        .Select(
-                            e =>
-                            new UserListItem
-                            {
-
-                                UserId = e.UserId,
-                                Name = e.Name,
-                                UserGuid = user.UserGuid
-
-                            }
-
-                        );
-
-                return query.ToArray()[user.UserId];
-            }
-        }
     }
 }
