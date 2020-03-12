@@ -71,7 +71,7 @@ namespace POS.Services
         }
 
         //Get Pizza by Id - EAC 
-        public PizzaDetail GetPizzaByPizzaId(int id)
+        public Pizza GetPizzaByPizzaId(int id)
         {
             using (var ctx = new ApplicationDbContext())
             {
@@ -80,7 +80,7 @@ namespace POS.Services
                         .PizzaTable
                         .Single(e => e.PizzaId == id);
                 return
-                    new PizzaDetail
+                    new Pizza
                     {
                         PizzaId = entity.PizzaId,
                         OrderId = entity.OrderId,
@@ -100,7 +100,7 @@ namespace POS.Services
             }
         }
         //Get Pizza by User - EAC
-        public IEnumerable<PizzaDetail> GetPizzasByUserId(int id)
+        public IEnumerable<Pizza> GetPizzasByUserId(int id)
         {
             using (var ctx = new ApplicationDbContext())
             {
@@ -108,7 +108,7 @@ namespace POS.Services
                     ctx
                         .PizzaTable
                         .Where(e => e.UserId == id)
-                        .Select(e => new PizzaDetail
+                        .Select(e => new Pizza
                         {
                             PizzaId = e.PizzaId,
                             OrderId = e.OrderId,
@@ -159,13 +159,13 @@ namespace POS.Services
         }
 
         //Delete Pizzas -EAC
-        public bool DeletePizza(int pizzaId)
+        public bool DeletePizza(int id)
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var entity = ctx
                     .PizzaTable
-                    .Single(e => e.PizzaId == pizzaId);
+                    .Single(e => e.PizzaId == id);
 
                 ctx.PizzaTable.Remove(entity);
 
