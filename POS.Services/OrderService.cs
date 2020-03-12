@@ -77,14 +77,14 @@ namespace POS.Services
             }
         }
 
-        public OrderDetail GetOrderById(int orderId)
+        public OrderDetail1 GetOrderById(int orderId)
         {
             using (var dbContext = new ApplicationDbContext())
             {
                 var entity = dbContext.OrderTable
                     .Single(x => x.OrderId == orderId && x.UserId == _userId);
 
-                return new OrderDetail
+                return new OrderDetail1
                 {
                     OrderId = entity.OrderId,
                     CustomerId = entity.CustomerId,
