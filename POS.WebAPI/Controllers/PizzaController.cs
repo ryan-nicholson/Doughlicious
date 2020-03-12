@@ -32,6 +32,7 @@ namespace POS.WebAPI.Controllers
                 return query.ToArray()[0].UserId;
             }
         }
+        [HttpGet]
         public IHttpActionResult Get()
         {
             PizzaService pizzaService = CreatePizzaService();
@@ -46,6 +47,7 @@ namespace POS.WebAPI.Controllers
             var pizza = pizzaService.GetPizzaByPizzaId(pizzaId.PizzaId);
             return Ok(pizza);
         }
+
         [HttpGet]
         public IHttpActionResult GetPizzasByUserId()
         {
@@ -60,6 +62,8 @@ namespace POS.WebAPI.Controllers
             PizzaService pizzaService = new PizzaService(userId);
             return pizzaService;
         }
+
+        [HttpPost]
         public IHttpActionResult Post(PizzaCreate pizza)
         {
             if (!ModelState.IsValid)
@@ -86,6 +90,7 @@ namespace POS.WebAPI.Controllers
             return Ok();
         }
 
+        [HttpDelete]
         public IHttpActionResult Delete(PizzaDetail id)
         {
             var service = CreatePizzaService();
