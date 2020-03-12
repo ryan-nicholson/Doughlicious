@@ -132,13 +132,13 @@ namespace POS.Services
         }
 
         //Delete Pizzas -EAC
-        public bool DeletePizza(PizzaDelete model)
+        public bool DeletePizza(int pizzaId)
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var entity = ctx
                     .PizzaTable
-                    .Single(e => e.PizzaId == model.PizzaId);//EAC: && e.OwnerId == _userId); -- do we want to restrict who can see it here (e.g. a customer can only see their own pizzas but employee/manager can see everyone's)-- if so, what is the correct OwnerId name now?
+                    .Single(e => e.PizzaId == pizzaId);//EAC: ElevenNote also had "&& e.OwnerId == _userId);" 
 
                 ctx.PizzaTable.Remove(entity);
 
