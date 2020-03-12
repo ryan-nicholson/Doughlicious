@@ -97,6 +97,26 @@ namespace POS.Services
             }
         }
 
+        public OrderDetail GetOrderByCustomer(int customerId)
+        {
+            using(var dbContext = new ApplicationDbContext())
+            {
+                var entity = dbContext.OrderTable
+                    .Single(x => x.CustomerId == customerId && x.UserId == _userId);
+
+                return new OrderDetail
+                {
+                    OrderId = entity.OrderId,
+                    CustomerId = entity.CustomerId,
+                    Pizzas = entity.Pizzas,
+                    Delivery = entity.Delivery,
+                    Pending = entity.Pending,
+                    OrderTime = entity.OrderTime,
+                    Price = entity.Price
+                };
+            }
+        }
+
         public bool UpdateOrder(OrderEdit model)
         {
             using (var dbContext = new ApplicationDbContext())
