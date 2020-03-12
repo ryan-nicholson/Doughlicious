@@ -38,6 +38,22 @@ namespace POS.WebAPI.Controllers
             var pizzas = pizzaService.GetPizzas();
             return Ok(pizzas);
         }
+
+        [HttpGet]
+        public IHttpActionResult GetPizzaByPizzaId(PizzaDetail pizzaId)
+        {
+            PizzaService pizzaService = CreatePizzaService();
+            var pizza = pizzaService.GetPizzaByPizzaId(pizzaId.PizzaId);
+            return Ok(pizza);
+        }
+        [HttpGet]
+        public IHttpActionResult GetPizzasByUserId()
+        {
+            PizzaService pizzaService = CreatePizzaService();
+            var pizza = pizzaService.GetPizzasByUserId(GetUserByGuid());
+            return Ok(pizza);
+        }
+
         private PizzaService CreatePizzaService()
         {
             int userId = GetUserByGuid();
@@ -78,6 +94,32 @@ namespace POS.WebAPI.Controllers
                 return InternalServerError();
 
             return Ok();
+        }
+        private UserListItem GetUserByGuid(string email)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+
+                var user = ctx.UserTable.Find(email);
+                var query =
+                    ctx
+                        .UserTable
+                        .Where(e => e.UserGuid == user.UserGuid)
+                        .Select(
+                            e =>
+                            new UserListItem
+                            {
+
+                                UserId = e.UserId,
+                                Name = e.Name,
+                                UserGuid = user.UserGuid
+
+                            }
+
+                        );
+
+                return query.ToArray()[user.UserId];
+            }
         }
     }
 }
