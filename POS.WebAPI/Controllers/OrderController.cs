@@ -14,6 +14,7 @@ namespace POS.WebAPI.Controllers
 {
     public class OrderController : ApiController
     {
+        [HttpGet]
         private int GetUserIdByGuid()
         {
             using (var dbContext = new ApplicationDbContext())
@@ -25,6 +26,8 @@ namespace POS.WebAPI.Controllers
                 return userId;
             }
         }
+
+        [HttpGet]
         public IHttpActionResult Get()
         {
             OrderService orderService = CreateOrderService();
@@ -32,6 +35,7 @@ namespace POS.WebAPI.Controllers
             return Ok(orders);
         }
 
+        [HttpPost]
         public IHttpActionResult PostOrder(OrderCreate order)
         {
             if (!ModelState.IsValid)
@@ -45,6 +49,7 @@ namespace POS.WebAPI.Controllers
             return Ok();
         }
 
+        [HttpPost]
         private OrderService CreateOrderService()
         {
             var userGuid = GetUserIdByGuid();
@@ -52,7 +57,8 @@ namespace POS.WebAPI.Controllers
             return orderService;
         }
 
-        public IHttpActionResult Put(OrderEdit order)
+        [HttpPut]
+        public IHttpActionResult EditOrder(OrderEdit order)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -65,6 +71,7 @@ namespace POS.WebAPI.Controllers
             return Ok();
         }
 
+        [HttpDelete]
         public IHttpActionResult Delete(OrderDetail orderId)
         {
             var service = CreateOrderService();
@@ -73,7 +80,6 @@ namespace POS.WebAPI.Controllers
                 return InternalServerError();
 
             return Ok();
-
         }
     }
 }
