@@ -71,11 +71,11 @@ namespace POS.WebAPI.Controllers
             return Ok();
         }
 
-        public IHttpActionResult Delete(int id)
+        public IHttpActionResult Delete(PizzaDelete model)
         {
             var service = CreatePizzaService();
 
-            if (!service.DeletePizza(id))
+            if (!service.DeletePizza(model))
                 return InternalServerError();
 
             return Ok();
