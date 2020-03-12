@@ -100,14 +100,14 @@ namespace POS.Services
             }
         }
         //Get Pizza by User - EAC
-        public IEnumerable<Pizza> GetPizzasByUserId(int id)
+        public IEnumerable<Pizza> GetPizzasByUserId(int userId)
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var entity =
                     ctx
                         .PizzaTable
-                        .Where(e => e.UserId == id)
+                        .Where(e => e.UserId == userId)
                         .Select(e => new Pizza
                         {
                             PizzaId = e.PizzaId,
