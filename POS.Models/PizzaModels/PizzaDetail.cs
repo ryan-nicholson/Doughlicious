@@ -12,10 +12,9 @@ namespace POS.Models.PizzaModels
     {
         public int PizzaId { get; set; }
         public int OrderId { get; set; }
-        //public Order Order { get; set; } //EAC: not needed because foreign key not needed here because it's not a table and foreign keys are only needed to show relationships between tables.
-
 
         public int UserId { get; set; }
+
         public int CustomerId { get; set; }
 
         public bool Cheese { get; set; }
@@ -36,7 +35,7 @@ namespace POS.Models.PizzaModels
 
         public ToppingType? TypeOfToppingFive { get; set; }
 
-        public string Comment { get; set; }//We need to set default value to ""
+        public string Comment { get; set; }
 
     }
 }
