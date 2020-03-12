@@ -19,7 +19,7 @@ namespace POS.Data
         public virtual POSUser User { get; set; }
 
 
-        public virtual ICollection<Pizza> PizzaCollection { get; set; }
+        //public virtual ICollection<Pizza> PizzaCollection { get; set; }
 
 
         public int CustomerId { get; set; }
