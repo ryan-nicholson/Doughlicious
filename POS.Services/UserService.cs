@@ -69,9 +69,11 @@ namespace POS.Services
         {
             using (var ctx = new ApplicationDbContext())
             {
+
                 var user = ctx.UserTable.Single(e => e.Email == email);
 
-                return user.UserGuid;
+
+                return Guid.Parse(user.Id);
             }
         }
         public UserListItem GetUserByGuid(string email)
