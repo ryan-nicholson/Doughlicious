@@ -65,11 +65,11 @@ namespace POS.WebAPI.Controllers
             return Ok();
         }
 
-        public IHttpActionResult Delete(int orderId)
+        public IHttpActionResult Delete(OrderDetail orderId)
         {
             var service = CreateOrderService();
 
-            if (!service.DeleteOrder(orderId))
+            if (!service.DeleteOrder(orderId.OrderId))
                 return InternalServerError();
 
             return Ok();

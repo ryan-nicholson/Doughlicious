@@ -56,7 +56,8 @@ namespace POS.WebAPI.Controllers
 
             return Ok();
         }
-        public IHttpActionResult Put(PizzaEdit pizza)
+        [HttpPut]
+        public IHttpActionResult EditPizza(PizzaEdit pizza)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -69,11 +70,11 @@ namespace POS.WebAPI.Controllers
             return Ok();
         }
 
-        public IHttpActionResult Delete(int id)
+        public IHttpActionResult Delete(PizzaDetail id)
         {
             var service = CreatePizzaService();
 
-            if (!service.DeletePizza(id))
+            if (!service.DeletePizza(id.PizzaId))
                 return InternalServerError();
 
             return Ok();
