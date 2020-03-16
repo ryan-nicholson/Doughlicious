@@ -29,11 +29,43 @@ namespace POS.WebAPI.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult Get()
+        public IHttpActionResult GetOrders()
         {
             OrderService orderService = CreateOrderService();
             var orders = orderService.GetAllOrders();
             return Ok(orders);
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetPending()
+        {
+            var orderService = CreateOrderService();
+            var orders = orderService.GetAllPendingOrders();
+            return Ok(orders);
+        }
+        
+        [HttpGet]
+        public IHttpActionResult GetDelivery()
+        {
+            var orderService = CreateOrderService();
+            var orders = orderService.GetAllDeliveryOrders();
+            return Ok(orders);
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetOrderByOrderId(int orderId)
+        {
+            var orderService = CreateOrderService();
+            var order = orderService.GetOrderById(orderId);
+            return Ok(order);
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetOrderByCustomerId(int customerId)
+        {
+            var orderService = CreateOrderService();
+            var order = orderService.GetOrderByCustomer(customerId);
+            return Ok(order);
         }
 
         [HttpPost]

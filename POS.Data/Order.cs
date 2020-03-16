@@ -34,7 +34,25 @@ namespace POS.Data
         public DateTimeOffset? ModifiedOrderTime { get; set; }
 
         [Required] // Where is price ever set?
-        public double Price { get; set; }
+                   // public double Price { get; set; }
+
+        private double _total;
+        public double Price
+        {
+            get
+            {
+                foreach(var pizza in Pizzas)
+                {
+                    _total += pizza.Price;
+                }
+
+                return _total;
+            }
+            set
+            {
+                _total = value ;
+            }
+        }
     }
 }
 

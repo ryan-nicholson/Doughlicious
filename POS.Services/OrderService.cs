@@ -69,8 +69,8 @@ namespace POS.Services
                         .Select(x => new OrderListItem
                         {
                             OrderId = x.OrderId,
-                            CustomerId = x.CustomerId,
                             UserId = x.UserId,
+                            CustomerId = x.CustomerId,
                             Delivery = x.Delivery,
                             Pending = x.Pending,
                             OrderTime = x.OrderTime,
@@ -137,8 +137,8 @@ namespace POS.Services
                         .Select(x => new OrderListItem
                         {
                             OrderId = x.OrderId,
-                            CustomerId = x.CustomerId,
                             UserId = x.UserId,
+                            CustomerId = x.CustomerId,
                             Delivery = x.Delivery,
                             OrderTime = x.OrderTime,
                             Price = x.Price
@@ -179,8 +179,8 @@ namespace POS.Services
                         .Select(x => new OrderListItem
                         {
                             OrderId = x.OrderId,
-                            CustomerId = x.CustomerId,
                             UserId = x.UserId,
+                            CustomerId = x.CustomerId,
                             Pending = x.Pending,
                             OrderTime = x.OrderTime,
                             Price = x.Price
@@ -212,19 +212,41 @@ namespace POS.Services
         {
             using (var dbContext = new ApplicationDbContext())
             {
-                var entity = dbContext.OrderTable
-                    .Single(x => x.OrderId == orderId && x.UserId == _userId);
-
-                return new OrderDetail
+                if (user.TypeUser == POSUser.UserTypes.Manager)
                 {
-                    OrderId = entity.OrderId,
-                    CustomerId = entity.CustomerId,
-                    Pizzas = entity.Pizzas,
-                    Delivery = entity.Delivery,
-                    Pending = entity.Pending,
-                    OrderTime = entity.OrderTime,
-                    Price = entity.Price
-                };
+                    var entity = dbContext.OrderTable
+                        .Single(x => x.OrderId == orderId);
+
+                    return new OrderDetail
+                    {
+                        // If user is a manager they will be displayed the requested order's detailed information along with who took the order
+                        OrderId = entity.OrderId,
+                        UserId = entity.UserId,
+                        CustomerId = entity.CustomerId,
+                        Pizzas = entity.Pizzas,
+                        Delivery = entity.Delivery,
+                        Pending = entity.Pending,
+                        OrderTime = entity.OrderTime,
+                        Price = entity.Price
+                    };
+                }
+                else
+                {
+                    // If user is a customer or employee they will be displayed the requested order's detailed information only if it is an order they took
+                    var entity = dbContext.OrderTable
+                        .Single(x => x.OrderId == orderId && x.UserId == _userId);
+
+                    return new OrderDetail
+                    {
+                        OrderId = entity.OrderId,
+                        CustomerId = entity.CustomerId,
+                        Pizzas = entity.Pizzas,
+                        Delivery = entity.Delivery,
+                        Pending = entity.Pending,
+                        OrderTime = entity.OrderTime,
+                        Price = entity.Price
+                    };
+                }
             }
         }
 
@@ -232,19 +254,41 @@ namespace POS.Services
         {
             using (var dbContext = new ApplicationDbContext())
             {
-                var entity = dbContext.OrderTable
-                    .Single(x => x.CustomerId == customerId && x.UserId == _userId);
-
-                return new OrderDetail
+                if (user.TypeUser == POSUser.UserTypes.Manager)
                 {
-                    OrderId = entity.OrderId,
-                    CustomerId = entity.CustomerId,
-                    Pizzas = entity.Pizzas,
-                    Delivery = entity.Delivery,
-                    Pending = entity.Pending,
-                    OrderTime = entity.OrderTime,
-                    Price = entity.Price
-                };
+                    var entity = dbContext.OrderTable
+                        .Single(x => x.CustomerId == customerId);
+
+                    return new OrderDetail
+                    {
+                        // If user is a manager they will be displayed the requested order's detailed information along with who took the order
+                        OrderId = entity.OrderId,
+                        UserId = entity.UserId,
+                        CustomerId = entity.CustomerId,
+                        Pizzas = entity.Pizzas,
+                        Delivery = entity.Delivery,
+                        Pending = entity.Pending,
+                        OrderTime = entity.OrderTime,
+                        Price = entity.Price
+                    };
+                }
+                else
+                {
+                    // If user is a customer or employee they will be displayed the requested order's detailed information only if it is an order they took
+                    var entity = dbContext.OrderTable
+                        .Single(x => x.CustomerId == customerId && x.UserId == _userId);
+
+                    return new OrderDetail
+                    {
+                        OrderId = entity.OrderId,
+                        CustomerId = entity.CustomerId,
+                        Pizzas = entity.Pizzas,
+                        Delivery = entity.Delivery,
+                        Pending = entity.Pending,
+                        OrderTime = entity.OrderTime,
+                        Price = entity.Price
+                    };
+                }
             }
         }
 
@@ -252,16 +296,34 @@ namespace POS.Services
         {
             using (var dbContext = new ApplicationDbContext())
             {
-                var entity = dbContext.OrderTable
-                    .Single(x => x.OrderId == model.OrderId && x.UserId == _userId);
+                if (user.TypeUser == POSUser.UserTypes.Manager)
+                {
+                    // If user is a manager they can update any requested order
+                    var entity = dbContext.OrderTable
+                        .Single(x => x.OrderId == model.OrderId);
 
-                entity.Pizzas = model.Pizzas;
-                entity.Delivery = model.Delivery;
-                entity.Pending = model.Pending;
-                entity.Price = model.Price;
-                entity.ModifiedOrderTime = DateTimeOffset.Now;
+                    entity.Pizzas = model.Pizzas;
+                    entity.Delivery = model.Delivery;
+                    entity.Pending = model.Pending;
+                    entity.Price = model.Price;
+                    entity.ModifiedOrderTime = DateTimeOffset.Now;
 
-                return dbContext.SaveChanges() == 1;
+                    return dbContext.SaveChanges() == 1;
+                }
+                else
+                {
+                    // If user is a customer or employee they can only update a requested order they took
+                    var entity = dbContext.OrderTable
+                        .Single(x => x.OrderId == model.OrderId && x.UserId == _userId);
+
+                    entity.Pizzas = model.Pizzas;
+                    entity.Delivery = model.Delivery;
+                    entity.Pending = model.Pending;
+                    entity.Price = model.Price;
+                    entity.ModifiedOrderTime = DateTimeOffset.Now;
+
+                    return dbContext.SaveChanges() == 1;
+                }
             }
         }
 
@@ -270,12 +332,26 @@ namespace POS.Services
             // Delete Order from the database
             using (var dbContext = new ApplicationDbContext())
             {
-                var entity = dbContext.OrderTable
-                    .Single(x => x.OrderId == orderId && x.UserId == _userId);
+                if (user.TypeUser == POSUser.UserTypes.Manager)
+                {
+                    // If user is a manager they can delete any requested order
+                    var entity = dbContext.OrderTable
+                        .Single(x => x.OrderId == orderId);
 
-                dbContext.OrderTable.Remove(entity);
+                    dbContext.OrderTable.Remove(entity);
 
-                return dbContext.SaveChanges() == 1;
+                    return dbContext.SaveChanges() == 1;
+                }
+                else
+                {
+                    // If user is a customer or employee they can only delete a requested order they took
+                    var entity = dbContext.OrderTable
+                        .Single(x => x.OrderId == orderId && x.UserId == _userId);
+
+                    dbContext.OrderTable.Remove(entity);
+
+                    return dbContext.SaveChanges() == 1;
+                }
             }
         }
     }
