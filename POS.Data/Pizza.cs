@@ -12,9 +12,9 @@ namespace POS.Data
     public class Pizza
     {
         public enum CrustType { pan, handtossed, thin }
-        public enum ToppingType { pepperoni, sausage, ham, bacon, chicken, mushrooms, onions, tomatoes, blackOlives, bellPeppers, jalapenos, extraCheese }
+        public enum ToppingType { pepperoni = 2, sausage = 2, ham = 2, bacon = 2, chicken = 2, mushrooms = 1, onions = 1, tomatoes = 1, blackOlives = 1, bellPeppers = 1, jalapenos = 1, extraCheese = 1, none = 0 }
         public enum SauceType { red, white, pesto }
-        public enum SizeType { S, M, L, XL }
+        public enum SizeType { S = 8, M = 10, L = 12, XL = 14 }
 
         [Key]
         public int PizzaId { get; set; }
@@ -44,6 +44,24 @@ namespace POS.Data
         public ToppingType? TypeOfToppingFour { get; set; }
 
         public ToppingType? TypeOfToppingFive { get; set; }
+
+        //deflaut value of price
+        private double _price;
+
+        public double Price {
+            get
+            {
+                return _price;
+            }
+
+            set
+            {
+                if (value == 0)
+                {
+                    _price = 0;
+                }
+            }
+        }
 
  
        //We need to set default value to ""
