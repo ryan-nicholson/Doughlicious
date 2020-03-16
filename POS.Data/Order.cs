@@ -36,21 +36,21 @@ namespace POS.Data
         [Required] // Where is price ever set?
                    // public double Price { get; set; }
 
-        double total;
+        private double _total;
         public double Price
         {
             get
             {
                 foreach(var pizza in Pizzas)
                 {
-                    total += pizza.Price;
+                    _total += pizza.Price;
                 }
 
-                return total;
+                return _total;
             }
             set
             {
-                total = value ;
+                _total = value ;
             }
         }
     }
