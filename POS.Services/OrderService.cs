@@ -34,7 +34,7 @@ namespace POS.Services
                         order.Delivery = model.Delivery;
                         order.Pending = true;
                         order.OrderTime = DateTimeOffset.Now;
-                        order.Price = model.Price;
+                        //order.Price = model.Price;
                     };
                 }
                 else
@@ -45,7 +45,7 @@ namespace POS.Services
                         order.Delivery = model.Delivery;
                         order.Pending = true;
                         order.OrderTime = DateTimeOffset.Now;
-                        order.Price = model.Price;
+                        //order.Price = model.Price;
                     };
                 }
             };

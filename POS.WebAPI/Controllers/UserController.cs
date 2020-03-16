@@ -15,7 +15,7 @@ namespace POS.WebAPI.Controllers
     public class UserController : ApiController
     {
         [HttpGet]
-        public IHttpActionResult Get(string getall)
+        public IHttpActionResult Get(/*string getall*/)
         {
             UserService userService = CreateUserService();
             var users = userService.GetUsers();

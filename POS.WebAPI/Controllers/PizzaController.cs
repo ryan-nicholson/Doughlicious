@@ -16,15 +16,12 @@ namespace POS.WebAPI.Controllers
 
         private int GetUserByGuid()
         {
-            using (var ctx = new ApplicationDbContext())
+            using (var dbContext = new ApplicationDbContext())
             {
-                var query =
-                    ctx
-                        .UserTable
-                        .Single(e => e.UserGuid == Guid.Parse(User.Identity.GetUserId()));
-
-                return query.UserId;
-
+                Guid x = Guid.Parse(User.Identity.GetUserId());
+                var query = dbContext.UserTable.Single(e => e.UserGuid == x);
+                var userId = query.UserId;
+                return userId;
             }
         }
         [HttpGet]

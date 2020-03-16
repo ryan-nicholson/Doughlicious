@@ -20,7 +20,7 @@ namespace POS.Data
 
         [Required]
         public int CustomerId { get; set; }
-    
+
         public virtual ICollection<Pizza> Pizzas { get; set; }
 
         [Required]
@@ -36,21 +36,21 @@ namespace POS.Data
         [Required] // Where is price ever set?
                    // public double Price { get; set; }
 
-        private double _total;
+        private double _total = 0;
         public double Price
         {
             get
             {
-                foreach(var pizza in Pizzas)
-                {
-                    _total += pizza.Price;
-                }
-
                 return _total;
             }
             set
             {
-                _total = value ;
+                foreach (var pizza in Pizzas)
+                {
+                    _total += pizza.Price;
+                }
+
+                _total = value;
             }
         }
     }
