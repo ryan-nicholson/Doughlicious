@@ -12,9 +12,9 @@ namespace POS.Data
     public class Pizza
     {
         public enum CrustType { pan, handtossed, thin }
-        public enum ToppingType { pepperoni, sausage, ham, bacon, chicken, mushrooms, onions, tomatoes, blackOlives, bellPeppers, jalapenos, extraCheese }
+        public enum ToppingType { pepperoni = 2, sausage = 2, ham = 2, bacon = 2, chicken = 2, mushrooms = 1, onions = 1, tomatoes = 1, blackOlives = 1, bellPeppers = 1, jalapenos = 1, extraCheese = 1, none = 0 }
         public enum SauceType { red, white, pesto }
-        public enum SizeType { S, M, L, XL }
+        public enum SizeType { S = 8, M = 10, L = 12, XL = 14 }
 
         [Key]
         public int PizzaId { get; set; }
@@ -34,19 +34,117 @@ namespace POS.Data
         public SauceType TypeOfSauce { get; set; }
         [Required]
         public SizeType TypeOfSize { get; set; }
+        private ToppingType _typeOfToppingOne;
+        public ToppingType? TypeOfToppingOne
+        {
+            get
+            {
+                return _typeOfToppingOne;
+            }
+            set
+            {
+                if (value == null)
+                {
+                    _typeOfToppingOne = Pizza.ToppingType.none; 
+                }
+            }
+        }
+        private ToppingType _typeOfToppingTwo;
+        public ToppingType? TypeOfToppingTwo
+        {
+            get
+            {
+                return _typeOfToppingTwo;
+            }
+            set
+            {
+                if (value == null)
+                {
+                    _typeOfToppingTwo = Pizza.ToppingType.none;
+                }
+            }
+        }
+        private ToppingType _typeOfToppingThree;
+        public ToppingType? TypeOfToppingThree
+        {
+            get
+            {
+                return _typeOfToppingThree;
+            }
+            set
+            {
+                if (value == null)
+                {
+                    _typeOfToppingThree = Pizza.ToppingType.none;
+                }
+            }
+        }
+        private ToppingType _typeOfToppingFour;
+        public ToppingType? TypeOfToppingFour
+        {
+            get
+            {
+                return _typeOfToppingFour;
+            }
+            set
+            {
+                if (value == null)
+                {
+                    _typeOfToppingFour = Pizza.ToppingType.none;
+                }
+            }
+        }
+        private ToppingType _typeOfToppingFive;
+        public ToppingType? TypeOfToppingFive
+        {
+            get
+            {
+                return _typeOfToppingFive;
+            }
+            set
+            {
+                if (value == null)
+                {
+                    _typeOfToppingFive = Pizza.ToppingType.none;
+                }
+            }
+        }
 
-        public ToppingType? TypeOfToppingOne { get; set; }
+        //default value of price
+        private double _price;
+        public double Price
+        {
+            get
+            {
+                return _price;
+            }
 
-        public ToppingType? TypeOfToppingTwo { get; set; }
+            set
+            {
+                if (value == 0)
+                {
+                    _price = (double)TypeOfSize + (double)TypeOfToppingOne + (double)TypeOfToppingTwo + (double)TypeOfToppingThree + (double)TypeOfToppingFour + (double)TypeOfToppingFive;
+                   
+                }
+            }
+        }
+        //
 
-        public ToppingType? TypeOfToppingThree { get; set; }
+        /*
+        public double Price
+        {
+            get
+            {
+                _price = (double)TypeOfSize + (double)TypeOfToppingOne + (double)TypeOfToppingTwo + (double)TypeOfToppingThree + (double)TypeOfToppingFour + (double)TypeOfToppingFive;
+                return _price;
+            }
+            set
+            {
+                _price = value;
+            }
+        */
 
-        public ToppingType? TypeOfToppingFour { get; set; }
-
-        public ToppingType? TypeOfToppingFive { get; set; }
-
- 
-       //We need to set default value to ""
+        //We need to set default value to ""
         private string _comment;
         public string Comment
         {
