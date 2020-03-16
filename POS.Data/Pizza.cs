@@ -34,21 +34,86 @@ namespace POS.Data
         public SauceType TypeOfSauce { get; set; }
         [Required]
         public SizeType TypeOfSize { get; set; }
+        private ToppingType _typeOfToppingOne;
+        public ToppingType? TypeOfToppingOne
+        {
+            get
+            {
+                return _typeOfToppingOne;
+            }
+            set
+            {
+                if (value == null)
+                {
+                    _typeOfToppingOne = Pizza.ToppingType.none; 
+                }
+            }
+        }
+        private ToppingType _typeOfToppingTwo;
+        public ToppingType? TypeOfToppingTwo
+        {
+            get
+            {
+                return _typeOfToppingTwo;
+            }
+            set
+            {
+                if (value == null)
+                {
+                    _typeOfToppingTwo = Pizza.ToppingType.none;
+                }
+            }
+        }
+        private ToppingType _typeOfToppingThree;
+        public ToppingType? TypeOfToppingThree
+        {
+            get
+            {
+                return _typeOfToppingThree;
+            }
+            set
+            {
+                if (value == null)
+                {
+                    _typeOfToppingThree = Pizza.ToppingType.none;
+                }
+            }
+        }
+        private ToppingType _typeOfToppingFour;
+        public ToppingType? TypeOfToppingFour
+        {
+            get
+            {
+                return _typeOfToppingFour;
+            }
+            set
+            {
+                if (value == null)
+                {
+                    _typeOfToppingFour = Pizza.ToppingType.none;
+                }
+            }
+        }
+        private ToppingType _typeOfToppingFive;
+        public ToppingType? TypeOfToppingFive
+        {
+            get
+            {
+                return _typeOfToppingFive;
+            }
+            set
+            {
+                if (value == null)
+                {
+                    _typeOfToppingFive = Pizza.ToppingType.none;
+                }
+            }
+        }
 
-        public ToppingType? TypeOfToppingOne { get; set; }
-
-        public ToppingType? TypeOfToppingTwo { get; set; }
-
-        public ToppingType? TypeOfToppingThree { get; set; }
-
-        public ToppingType? TypeOfToppingFour { get; set; }
-
-        public ToppingType? TypeOfToppingFive { get; set; }
-
-        //deflaut value of price
+        //default value of price
         private double _price;
-
-        public double Price {
+        public double Price
+        {
             get
             {
                 return _price;
@@ -58,13 +123,28 @@ namespace POS.Data
             {
                 if (value == 0)
                 {
-                    _price = 0;
+                    _price = (double)TypeOfSize + (double)TypeOfToppingOne + (double)TypeOfToppingTwo + (double)TypeOfToppingThree + (double)TypeOfToppingFour + (double)TypeOfToppingFive;
+                   
                 }
             }
         }
+        //
 
- 
-       //We need to set default value to ""
+        /*
+        public double Price
+        {
+            get
+            {
+                _price = (double)TypeOfSize + (double)TypeOfToppingOne + (double)TypeOfToppingTwo + (double)TypeOfToppingThree + (double)TypeOfToppingFour + (double)TypeOfToppingFive;
+                return _price;
+            }
+            set
+            {
+                _price = value;
+            }
+        */
+
+        //We need to set default value to ""
         private string _comment;
         public string Comment
         {

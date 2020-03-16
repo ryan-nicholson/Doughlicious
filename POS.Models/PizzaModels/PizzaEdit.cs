@@ -39,5 +39,7 @@ namespace POS.Models.PizzaModels
         public Pizza.ToppingType? TypeOfToppingFive { get; set; }
 
         public string Comment { get; set; }
+
+        public double Price { get; set; }
     }
 }
