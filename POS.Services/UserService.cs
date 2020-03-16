@@ -40,20 +40,44 @@ namespace POS.Services
             }
         }
 
-        public IEnumerable<POSUser> GetUsers()
+        public IEnumerable<UserListItem> GetUsers()
         {
             using (var ctx = new ApplicationDbContext())
             {
-                var query = ctx.UserTable;
-
-                return query.ToArray();
+                List<UserListItem> userList = new List<UserListItem>();
+                var query = ctx.UserTable.Select(e => new UserListItem
+                {
+                    UserGuid = e.UserGuid,
+                    UserId = e.UserId,
+                    Name = e.Name,
+                    Email = e.Email,
+                });
+                return query.ToList();
             }
         }
+
+        /*
+        public IEnumerable<POSUser> GetUsers()
+        {
+
+            using (var ctx = new ApplicationDbContext())
+            {
+                var query = ctx.UserTable
+                    .Select(x => new POSUser()
+                    {
+                        Name = x.Name
+                    })
+                    .AsEnumerable();
+
+                return query;
+            }
+        }
+        */
         private string GetNameByGuid(string email)
         {
             using (var ctx = new ApplicationDbContext())
             {
-                var user = ctx.UserTable.Single(e => e.Email == email);
+                var user = ctx.Users.Single(e => e.Email == email);
                 return user.Name;
             }
         }
@@ -61,7 +85,7 @@ namespace POS.Services
         {
             using (var ctx = new ApplicationDbContext())
             {
-                var user = ctx.UserTable.Single(e => e.Email == email);
+                var user = ctx.Users.Single(e => e.Email == email);
                 return user.Email;
             }
         }
@@ -70,10 +94,10 @@ namespace POS.Services
             using (var ctx = new ApplicationDbContext())
             {
 
-                var user = ctx.UserTable.Single(e => e.Email == email);
+                var user = ctx.Users.Single(e => e.Email == email);
 
 
-                return user.UserGuid;
+                return Guid.Parse(user.Id);
             }
         }
         public UserListItem GetUserByGuid(string email)
