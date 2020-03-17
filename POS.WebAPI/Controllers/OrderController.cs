@@ -27,7 +27,7 @@ namespace POS.WebAPI.Controllers
             }
         }
 
-        [HttpGet]
+        [Route("api/Order/AllOrders")]
         public IHttpActionResult GetOrders()
         {
             OrderService orderService = CreateOrderService();
@@ -35,15 +35,15 @@ namespace POS.WebAPI.Controllers
             return Ok(orders);
         }
 
-        [HttpGet]
+        [Route("api/Order/AllPending")]
         public IHttpActionResult GetPending()
         {
             var orderService = CreateOrderService();
             var orders = orderService.GetAllPendingOrders();
             return Ok(orders);
         }
-        
-        [HttpGet]
+
+        [Route("api/Order/AllDelivery")]
         public IHttpActionResult GetDelivery()
         {
             var orderService = CreateOrderService();
@@ -51,7 +51,7 @@ namespace POS.WebAPI.Controllers
             return Ok(orders);
         }
 
-        [HttpGet]
+        [Route("api/Order/{orderId}")]
         public IHttpActionResult GetOrderByOrderId(int orderId)
         {
             var orderService = CreateOrderService();
@@ -59,7 +59,7 @@ namespace POS.WebAPI.Controllers
             return Ok(order);
         }
 
-        [HttpGet]
+        [Route("api/Order/{customerId}")]
         public IHttpActionResult GetOrderByCustomerId(int customerId)
         {
             var orderService = CreateOrderService();
