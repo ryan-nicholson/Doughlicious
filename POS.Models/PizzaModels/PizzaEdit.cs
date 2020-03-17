@@ -13,12 +13,12 @@ namespace POS.Models.PizzaModels
     public class PizzaEdit
     {
         public int UserId { get; set; }
+
         public int CustomerId { get; set; }
         
         public int PizzaId { get; set; }
 
         public int OrderId { get; set; }
-       
 
         public bool Cheese { get; set; }
 
@@ -38,8 +38,8 @@ namespace POS.Models.PizzaModels
 
         public Pizza.ToppingType? TypeOfToppingFive { get; set; }
 
+        public string Comment { get; set; }
 
-        public string Comment { get; set; }//We need to set default value to ""
-
+        public double Price { get; set; }
     }
 }

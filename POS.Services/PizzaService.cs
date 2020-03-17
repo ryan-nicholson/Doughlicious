@@ -13,7 +13,6 @@ namespace POS.Services
     {
         private readonly int _userId;
 
-        
         public PizzaService(int userId)
         {
             _userId = userId;
@@ -23,10 +22,11 @@ namespace POS.Services
         {
             var entity =
                 new Pizza()
-                { 
+                {
                     UserId = _userId,
+                    OrderId = model.OrderId,
                     CustomerId = model.CustomerId,
-                    Cheese= model.Cheese,
+                    Cheese = model.Cheese,
                     Comment = model.Comment,
                     TypeOfCrust = model.TypeOfCrust,
                     TypeOfSauce = model.TypeOfSauce,
@@ -35,8 +35,8 @@ namespace POS.Services
                     TypeOfToppingTwo = model.TypeOfToppingTwo,
                     TypeOfToppingThree = model.TypeOfToppingThree,
                     TypeOfToppingFour = model.TypeOfToppingFour,
-                    TypeOfToppingFive = model.TypeOfToppingFive
-                    //EAC: do we want to include a created and modified time for pizza? or only for order?
+                    TypeOfToppingFive = model.TypeOfToppingFive,
+                    CreatedUtc = DateTimeOffset.UtcNow
                 };
 
             using (var ctx = new ApplicationDbContext())
@@ -45,35 +45,33 @@ namespace POS.Services
                 return ctx.SaveChanges() == 1;
             }
         }
-        public IEnumerable<PizzaListItem> GetPizzas()
+        public IEnumerable<Pizza> GetAllPizzas()
         {
-            using (var ctx = new ApplicationDbContext()) 
+            using (var ctx = new ApplicationDbContext())
             {
                 var query =
                     ctx
-                        .PizzaTable
-                        .Where(e => e.UserId == _userId)
-                        .Select(
-                            e =>
-                                new PizzaListItem
-                                {//EAC: If this is a list of all pizzas ever, do we want the other pizza properties here, too? Maybe CreatedUtcOffset and maybe ModifiedUtcOffset? And later the Pending status?
-                                    PizzaId = e.PizzaId,
-                                    CustomerId = e.CustomerId,
-                                    OrderId = e.OrderId,
-                                    
-                                }
-                        );
+                        .PizzaTable//EAC: commented below out so it pulls all pizzas
+                                   //.Select(
+                                   //    e =>
+                                   //        new PizzaListItem
+                                   //        {
+                                   //            UserId = e.UserId,
+                                   //            PizzaId = e.PizzaId,
+                                   //            CustomerId = e.CustomerId,
+                                   //            OrderId = e.OrderId,
+                                   //            CreatedUtc = e.CreatedUtc
+                                   //        }
+                                   //)
+                        ;
 
                 return query.ToArray();
             }
-            //var ctx = new ApplicationDbContext() //EAC: these three lines are showing errors so I commented them out, ask Arthur what they do
-            //    var x = ctx.Orders[0];
-            //var y = x.PizzaCollection[0];
 
         }
 
         //Get Pizza by Id - EAC 
-        public PizzaDetail GetPizzaById(int id)
+        public Pizza GetPizzaByPizzaId(int id)
         {
             using (var ctx = new ApplicationDbContext())
             {
@@ -82,7 +80,7 @@ namespace POS.Services
                         .PizzaTable
                         .Single(e => e.PizzaId == id);
                 return
-                    new PizzaDetail
+                    new Pizza
                     {
                         PizzaId = entity.PizzaId,
                         OrderId = entity.OrderId,
@@ -101,6 +99,35 @@ namespace POS.Services
                     };
             }
         }
+        //Get Pizza by User - EAC
+        public IEnumerable<Pizza> GetPizzasByUserId(int userId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .PizzaTable
+                        .Where(e => e.UserId == userId)
+                        .Select(e => new Pizza
+                        {
+                            PizzaId = e.PizzaId,
+                            OrderId = e.OrderId,
+                            UserId = e.UserId,
+                            CustomerId = e.CustomerId,
+                            Cheese = e.Cheese,
+                            TypeOfCrust = e.TypeOfCrust,
+                            TypeOfSauce = e.TypeOfSauce,
+                            TypeOfSize = e.TypeOfSize,
+                            TypeOfToppingOne = e.TypeOfToppingOne,
+                            TypeOfToppingTwo = e.TypeOfToppingTwo,
+                            TypeOfToppingThree = e.TypeOfToppingThree,
+                            TypeOfToppingFour = e.TypeOfToppingFour,
+                            TypeOfToppingFive = e.TypeOfToppingFive,
+                            Comment = e.Comment
+                        });
+                return entity;
+            }
+        }
 
         //Update/Edit Pizzas -EAC
 
@@ -110,7 +137,7 @@ namespace POS.Services
             {
                 var entity = ctx
                     .PizzaTable
-                    .Single(e => e.PizzaId == model.PizzaId);//EAC: && e.OwnerId == _userId); -- do we want to restrict who can see it here (e.g. a customer can only see their own pizzas but employee/manager can see everyone's)-- if so, what is the correct OwnerId name now?
+                    .Single(e => e.PizzaId == model.PizzaId);
 
                 entity.PizzaId = model.PizzaId;
                 entity.OrderId = model.OrderId;
@@ -125,20 +152,20 @@ namespace POS.Services
                 entity.TypeOfToppingThree = model.TypeOfToppingThree;
                 entity.TypeOfToppingFour = model.TypeOfToppingFour;
                 entity.TypeOfToppingFive = model.TypeOfToppingFive;
-                entity.Comment = model.Comment; 
-                //entity.ModifiedUtc = DateTimeOffset.UtcNow;//EAC: do we want to have a ModifiedUtcOffset to show pizza edit time? Makes sense to me if only one pizza in an order with multiple pizzas was edited. After group talk, mention
+                entity.Comment = model.Comment;
+                entity.ModifiedUtc = DateTimeOffset.UtcNow;
                 return ctx.SaveChanges() == 1;
             }
         }
 
         //Delete Pizzas -EAC
-        public bool DeletePizza(PizzaDelete model)
+        public bool DeletePizza(int id)
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var entity = ctx
                     .PizzaTable
-                    .Single(e => e.PizzaId == model.PizzaId);//EAC: && e.OwnerId == _userId); -- do we want to restrict who can see it here (e.g. a customer can only see their own pizzas but employee/manager can see everyone's)-- if so, what is the correct OwnerId name now?
+                    .Single(e => e.PizzaId == id);
 
                 ctx.PizzaTable.Remove(entity);
 

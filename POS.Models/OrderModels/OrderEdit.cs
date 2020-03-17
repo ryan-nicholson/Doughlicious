@@ -19,6 +19,5 @@ namespace POS.Models.OrderModels
         public bool Pending { get; set; }
 
         public double Price { get; set; }
-
     }
 }

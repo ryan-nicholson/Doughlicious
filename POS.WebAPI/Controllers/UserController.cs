@@ -15,7 +15,7 @@ namespace POS.WebAPI.Controllers
     public class UserController : ApiController
     {
         [HttpGet]
-        public IHttpActionResult Get()
+        public IHttpActionResult Get(/*string getall*/)
         {
             UserService userService = CreateUserService();
             var users = userService.GetUsers();
@@ -23,14 +23,14 @@ namespace POS.WebAPI.Controllers
         }
         [HttpGet]
 
-        public IHttpActionResult GetUserByEmail(UserGetEmail email)
+        public IHttpActionResult GetUserByEmail(UserGetEmail email, string getuserbyemail)
         {
             UserService userService = CreateUserService();
             var users = userService.GetUserByGuid(email.Email);
             return Ok(users);
         }
         [HttpGet]
-        public IHttpActionResult GetUsersByRole(UserGetUserType userTypes)
+        public IHttpActionResult GetUsersByRole(UserGetUserType userTypes, string getuserbytype)
         {
             if (userTypes.typeUser == POSUser.UserTypes.Customer)
 

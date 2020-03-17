@@ -13,39 +13,42 @@ namespace POS.WebAPI.Controllers
     public class PizzaController : ApiController
     {
 
-        private int GetUserByGuid()
+        [HttpGet]
+        private int GetUserIdByGuid()
         {
-            using (var ctx = new ApplicationDbContext())
+            using (var dbContext = new ApplicationDbContext())
             {
-                var query =
-                    ctx
-                        .UserTable
-                        .Where(e => e.UserGuid == Guid.Parse(User.Identity.GetUserId()))
-                        .Select(
-                            e =>
-                                new UserListItem
-                                {
-
-                                    UserId = e.UserId
-
-                                }
-                        ); ;
-
-                return query.ToArray()[0].UserId;
+                Guid x = Guid.Parse(User.Identity.GetUserId());
+                var query = dbContext.UserTable.Single(e => e.UserGuid == x);
+                var userId = query.UserId;
+                return userId;
             }
         }
-        public IHttpActionResult Get()
+        [Route("api/Pizza/AllPizzas") ]
+        public IHttpActionResult GetPizzas()
         {
             PizzaService pizzaService = CreatePizzaService();
-            var pizzas = pizzaService.GetPizzas();
+            var pizzas = pizzaService.GetAllPizzas();
             return Ok(pizzas);
         }
-        private PizzaService CreatePizzaService()
+
+        [Route("api/Pizza/{pizzaId:int}")]
+        public IHttpActionResult GetPizzaByPizzaId(PizzaDetail pizzaId)
         {
-            int userId = GetUserByGuid();
-            PizzaService pizzaService = new PizzaService(userId);
-            return pizzaService;
+            PizzaService pizzaService = CreatePizzaService();
+            var pizza = pizzaService.GetPizzaByPizzaId(pizzaId.PizzaId);
+            return Ok(pizza);
         }
+
+        
+        public IHttpActionResult GetPizzasByUserId()
+        {
+            PizzaService pizzaService = CreatePizzaService();
+            var pizza = pizzaService.GetPizzasByUserId(GetUserIdByGuid());
+            return Ok(pizza);
+        }
+        
+        [HttpPost]
         public IHttpActionResult Post(PizzaCreate pizza)
         {
             if (!ModelState.IsValid)
@@ -58,7 +61,8 @@ namespace POS.WebAPI.Controllers
 
             return Ok();
         }
-        public IHttpActionResult Put(PizzaEdit pizza)
+        [HttpPut]
+        public IHttpActionResult EditPizza(PizzaEdit pizza)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -71,14 +75,21 @@ namespace POS.WebAPI.Controllers
             return Ok();
         }
 
-        public IHttpActionResult Delete(PizzaDelete model)
+        [HttpDelete]
+        public IHttpActionResult Delete(PizzaDetail id)
         {
             var service = CreatePizzaService();
 
-            if (!service.DeletePizza(model))
+            if (!service.DeletePizza(id.PizzaId))
                 return InternalServerError();
 
             return Ok();
+        }
+        private PizzaService CreatePizzaService()
+        {
+            var userId = GetUserIdByGuid();
+            var pizzaService = new PizzaService(userId);
+            return pizzaService;
         }
     }
 }

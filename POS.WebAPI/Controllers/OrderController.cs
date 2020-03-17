@@ -12,26 +12,64 @@ using System.Web.Http;
 
 namespace POS.WebAPI.Controllers
 {
+    [Authorize]
     public class OrderController : ApiController
     {
+        [HttpGet]
         private int GetUserIdByGuid()
         {
             using (var dbContext = new ApplicationDbContext())
             {
-                var query = dbContext.UserTable
-                   .Find(Guid.Parse(User.Identity.GetUserId()));
+                Guid x = Guid.Parse(User.Identity.GetUserId());
+                var query = dbContext.UserTable.Single(e => e.UserGuid == x);
                 var userId = query.UserId;
-
                 return userId;
             }
         }
-        public IHttpActionResult Get()
+
+        [Route("api/Order/AllOrders")]
+        public IHttpActionResult GetOrders()
         {
             OrderService orderService = CreateOrderService();
             var orders = orderService.GetAllOrders();
             return Ok(orders);
         }
 
+        [Route("api/Order/AllPending")]
+        public IHttpActionResult GetPending()
+        {
+            var orderService = CreateOrderService();
+            var orders = orderService.GetAllPendingOrders();
+            return Ok(orders);
+        }
+
+        [Route("api/Order/AllDelivery")]
+        public IHttpActionResult GetDelivery()
+        {
+            var orderService = CreateOrderService();
+            var orders = orderService.GetAllDeliveryOrders();
+            return Ok(orders);
+        }
+
+        //[AcceptVerbs("GET")]
+        //[Route("api/Order/{orderId:int}")]
+        public IHttpActionResult GetOrderByOrderId(int orderId)
+        {
+            var orderService = CreateOrderService();
+            var order = orderService.GetOrderById(orderId);
+            return Ok(order);
+        }
+
+
+        //[Route("api/Order/{customerId:int}")]
+        public IHttpActionResult GetOrderByCustomerId(int customerId)
+        {
+            var orderService = CreateOrderService();
+            var order = orderService.GetOrderByCustomer(customerId);
+            return Ok(order);
+        }
+
+        [HttpPost]
         public IHttpActionResult PostOrder(OrderCreate order)
         {
             if (!ModelState.IsValid)
@@ -45,6 +83,7 @@ namespace POS.WebAPI.Controllers
             return Ok();
         }
 
+        [HttpPost]
         private OrderService CreateOrderService()
         {
             var userGuid = GetUserIdByGuid();
@@ -52,7 +91,8 @@ namespace POS.WebAPI.Controllers
             return orderService;
         }
 
-        public IHttpActionResult Put(OrderEdit order)
+        [HttpPut]
+        public IHttpActionResult EditOrder(OrderEdit order)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -65,15 +105,15 @@ namespace POS.WebAPI.Controllers
             return Ok();
         }
 
-        public IHttpActionResult Delete(int orderId)
+        [HttpDelete]
+        public IHttpActionResult Delete(OrderDetail orderId)
         {
             var service = CreateOrderService();
 
-            if (!service.DeleteOrder(orderId))
+            if (!service.DeleteOrder(orderId.OrderId))
                 return InternalServerError();
 
             return Ok();
-
         }
     }
 }

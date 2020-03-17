@@ -7,13 +7,13 @@ namespace POS.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.0")]
-    public sealed partial class AddedNamePropToAppUser : IMigrationMetadata
+    public sealed partial class InitialMigration : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddedNamePropToAppUser));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialMigration));
         
         string IMigrationMetadata.Id
         {
-            get { return "202003091930318_AddedNamePropToAppUser"; }
+            get { return "202003161455306_InitialMigration"; }
         }
         
         string IMigrationMetadata.Source
