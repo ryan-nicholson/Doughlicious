@@ -28,7 +28,6 @@ namespace POS.Data
 
         public bool Pending { get; set; }
 
-        // Shouldn't be DateTimeOffset => we want to know the day along with the time the order was taken
         [Required]
         public DateTimeOffset OrderTime { get; set; }
 

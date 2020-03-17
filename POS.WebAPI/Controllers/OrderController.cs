@@ -51,7 +51,6 @@ namespace POS.WebAPI.Controllers
             return Ok(orders);
         }
 
-        //[AcceptVerbs("GET")]
         [Route("api/Order/OrderByOrderId")]
         public IHttpActionResult GetOrderByOrderId(OrderDetail model)
         {

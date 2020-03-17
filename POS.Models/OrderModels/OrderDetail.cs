@@ -15,8 +15,8 @@ namespace POS.Models.OrderModels
 
         public int CustomerId { get; set; }
 
-        //public ICollection<Pizza> Pizzas { get; set; }
-
+        public ICollection<Pizza> Pizzas { get; set; }
+      
         public bool Delivery { get; set; }
 
         public bool Pending { get; set; }

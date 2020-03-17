@@ -236,7 +236,7 @@ namespace POS.Services
                     var entity = dbContext.OrderTable
                         .Single(x => x.OrderId == orderId && x.UserId == _userId);
 
-                    return new OrderDetail
+                    var order = new OrderDetail
                     {
                         OrderId = entity.OrderId,
                         CustomerId = entity.CustomerId,
@@ -246,6 +246,8 @@ namespace POS.Services
                         OrderTime = entity.OrderTime,
                         Price = entity.Price
                     };
+
+                    return order;
                 }
             }
         }
@@ -269,89 +271,7 @@ namespace POS.Services
                    return query.ToArray();
             }
         }
-            /*
-            using (var dbContext = new ApplicationDbContext())
-            {
-                if (user.TypeUser == POSUser.UserTypes.Manager)
-                {
-                    // If user is a manager then they will be displayed all delivery orders that exist, showing the UserId for the user that placed the order
-                    var query = dbContext.OrderTable
-                        .Where(x => x.Delivery == true)
-                        .Select(x => new OrderListItem
-                        {
-                            OrderId = x.OrderId,
-                            UserId = x.UserId,
-                            CustomerId = x.CustomerId,
-                            Pending = x.Pending,
-                            OrderTime = x.OrderTime,
-                            Price = x.Price
-                        });
-
-                    return query.ToArray();
-                }
-                else
-                {
-                    // If user is an employee or customer they will be displayed all delivery orders that they have placed
-                    var query = dbContext.OrderTable
-                        .Where(x => x.UserId == _userId && x.Delivery == true)
-                        .Select(x => new OrderListItem
-                        {
-                            OrderId = x.OrderId,
-                            CustomerId = x.CustomerId,
-                            //Delivery = x.Delivery,
-                            Pending = x.Pending,
-                            OrderTime = x.OrderTime,
-                            Price = x.Price
-                        });
-
-                    return query.ToArray();
-                }
-            }
-        }
-             */
-
-
-        /*
-            using (var dbContext = new ApplicationDbContext())
-            {
-                if (user.TypeUser == POSUser.UserTypes.Manager)
-                {
-                    var entity = dbContext.OrderTable
-                        .Select(x => x.CustomerId == customerId);
-
-                    return new OrderListItem
-                    {
-                        // If user is a manager they will be displayed the requested order's detailed information along with who took the order
-                        OrderId = entity.OrderId,
-                        UserId = entity.UserId,
-                        CustomerId = entity.CustomerId,
-                        //Pizzas = entity.Pizzas,
-                        Delivery = entity.Delivery,
-                        Pending = entity.Pending,
-                        OrderTime = entity.OrderTime,
-                        Price = entity.Price
-                    };
-                }
-                else
-                {
-                    // If user is a customer or employee they will be displayed the requested order's detailed information only if it is an order they took
-                    var entity = dbContext.OrderTable
-                        .Single(x => x.CustomerId == customerId && x.UserId == _userId);
-
-                    return new OrderDetail
-                    {
-                        OrderId = entity.OrderId,
-                        CustomerId = entity.CustomerId,
-                        //Pizzas = entity.Pizzas,
-                        Delivery = entity.Delivery,
-                        Pending = entity.Pending,
-                        OrderTime = entity.OrderTime,
-                        Price = entity.Price
-                    };
-                }
-            }
-        }
-        */
+           
         public bool UpdateOrder(OrderEdit model)
         {
             using (var dbContext = new ApplicationDbContext())
