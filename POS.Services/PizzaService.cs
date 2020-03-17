@@ -17,7 +17,7 @@ namespace POS.Services
         {
             _userId = userId;
         }
-
+        
         public bool CreatePizza(PizzaCreate model)
         {
             var entity =
@@ -45,7 +45,9 @@ namespace POS.Services
                 return ctx.SaveChanges() == 1;
             }
         }
+
         public IEnumerable<PizzaListItem> GetPizzas()
+
         {
             using (var ctx = new ApplicationDbContext())
             {
