@@ -32,7 +32,7 @@ namespace POS.WebAPI.Controllers
             return Ok(pizzas);
         }
 
-        [Route("api/Pizza/{pizzaId:int}")]
+        [Route("api/Pizza/GetPizzaByPizzaId")]
         public IHttpActionResult GetPizzaByPizzaId(PizzaDetail pizzaId)
         {
             PizzaService pizzaService = CreatePizzaService();
@@ -40,7 +40,7 @@ namespace POS.WebAPI.Controllers
             return Ok(pizza);
         }
 
-        
+        [Route("api/Pizza/GetPizzasByUserId")]
         public IHttpActionResult GetPizzasByUserId()
         {
             PizzaService pizzaService = CreatePizzaService();
