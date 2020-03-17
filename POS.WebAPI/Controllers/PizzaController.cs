@@ -13,8 +13,8 @@ namespace POS.WebAPI.Controllers
     public class PizzaController : ApiController
     {
 
-
-        private int GetUserByGuid()
+        [HttpGet]
+        private int GetUserIdByGuid()
         {
             using (var dbContext = new ApplicationDbContext())
             {
@@ -24,37 +24,30 @@ namespace POS.WebAPI.Controllers
                 return userId;
             }
         }
-        [HttpGet]
-        public IHttpActionResult Get(string getall)
+        [Route("api/Pizza/AllPizzas") ]
+        public IHttpActionResult GetPizzas()
         {
             PizzaService pizzaService = CreatePizzaService();
-            var pizzas = pizzaService.GetPizzas();
+            var pizzas = pizzaService.GetAllPizzas();
             return Ok(pizzas);
         }
 
-        [HttpGet]
-        public IHttpActionResult GetPizzaByPizzaId(PizzaDetail pizzaId, string getbyid)
+        [Route("api/Pizza/GetPizzaByPizzaId")]
+        public IHttpActionResult GetPizzaByPizzaId(PizzaDetail pizzaId)
         {
             PizzaService pizzaService = CreatePizzaService();
             var pizza = pizzaService.GetPizzaByPizzaId(pizzaId.PizzaId);
             return Ok(pizza);
         }
 
-        [HttpGet]
-        public IHttpActionResult GetPizzasByUserId(string getbyuser)
+        [Route("api/Pizza/GetPizzasByUserId")]
+        public IHttpActionResult GetPizzasByUserId()
         {
             PizzaService pizzaService = CreatePizzaService();
-            var pizza = pizzaService.GetPizzasByUserId(GetUserByGuid());
+            var pizza = pizzaService.GetPizzasByUserId(GetUserIdByGuid());
             return Ok(pizza);
         }
-
-        private PizzaService CreatePizzaService()
-        {
-            int userId = GetUserByGuid();
-            PizzaService pizzaService = new PizzaService(userId);
-            return pizzaService;
-        }
-
+        
         [HttpPost]
         public IHttpActionResult Post(PizzaCreate pizza)
         {
@@ -92,6 +85,11 @@ namespace POS.WebAPI.Controllers
 
             return Ok();
         }
-
+        private PizzaService CreatePizzaService()
+        {
+            var userId = GetUserIdByGuid();
+            var pizzaService = new PizzaService(userId);
+            return pizzaService;
+        }
     }
 }
