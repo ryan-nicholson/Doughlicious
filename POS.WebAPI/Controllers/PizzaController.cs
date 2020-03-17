@@ -13,7 +13,7 @@ namespace POS.WebAPI.Controllers
     public class PizzaController : ApiController
     {
 
-
+        [HttpGet]
         private int GetUserByGuid()
         {
             using (var dbContext = new ApplicationDbContext())

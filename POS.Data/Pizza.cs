@@ -16,6 +16,17 @@ namespace POS.Data
         public enum SauceType { red, white, pesto }
         public enum SizeType { S = 8, M = 10, L = 12, XL = 14 }
 
+        /* public static Dictionary<SizeType, double> Cost = new Dictionary<SizeType, double>
+             {
+             {SizeType.XL, 20},
+             {SizeType.L, 16},
+             {SizeType.M, 12},
+             {SizeType.S, 8},
+              };
+
+             Price = Cost[size];
+         */
+
         [Key]
         public int PizzaId { get; set; }
 
@@ -116,7 +127,7 @@ namespace POS.Data
 
         //default value of price
         private double _price;
-        /*public double Price
+        public double Price
         {
             get
             {
@@ -132,10 +143,10 @@ namespace POS.Data
                 }
             }
         }
-        */
+        
 
         
-        public double Price
+       /* public double Price
         {
             get
             {
@@ -146,7 +157,7 @@ namespace POS.Data
             {
                 _price = value;
             }
-        }
+        }*/
 
         //We need to set default value to ""
         private string _comment;
