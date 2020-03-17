@@ -56,23 +56,6 @@ namespace POS.Services
             }
         }
 
-        /*
-        public IEnumerable<POSUser> GetUsers()
-        {
-
-            using (var ctx = new ApplicationDbContext())
-            {
-                var query = ctx.UserTable
-                    .Select(x => new POSUser()
-                    {
-                        Name = x.Name
-                    })
-                    .AsEnumerable();
-
-                return query;
-            }
-        }
-        */
         private string GetNameByGuid(string email)
         {
             using (var ctx = new ApplicationDbContext())
@@ -124,6 +107,27 @@ namespace POS.Services
                         ) ; 
 
                 return query.ToArray()[user.UserId];
+            }
+        }
+        public IEnumerable<UserListItem> GetUsersByRole( POSUser.UserTypes type)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var query =
+                    ctx
+                        .UserTable
+                        .Where(e => e.TypeUser == type)
+                        .Select(
+                            e =>
+                                new UserListItem
+                                {
+                                    UserId = e.UserId,
+                                    UserGuid = e.UserGuid,
+                                    Name = e.Name
+                                }
+                        ); ;
+
+                return query.ToArray();
             }
         }
         public IEnumerable<UserListItem> GetCustomers()
@@ -189,7 +193,7 @@ namespace POS.Services
                 return query.ToArray();
             }
         }
-        public POSUser ChangeUserTypeEmployee(string email)
+        public POSUser ChangeUserType(string email, POSUser.UserTypes type)
         {
             using (var ctx = new ApplicationDbContext())
             {
@@ -199,7 +203,7 @@ namespace POS.Services
 
                 if (usertype == POSUser.UserTypes.Manager)
                 {
-                    query.TypeUser = POSUser.UserTypes.Employee;
+                    query.TypeUser = type;
                 }
 
                 return query;
