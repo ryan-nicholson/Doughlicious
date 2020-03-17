@@ -116,7 +116,7 @@ namespace POS.Data
 
         //default value of price
         private double _price;
-        public double Price
+        /*public double Price
         {
             get
             {
@@ -128,13 +128,13 @@ namespace POS.Data
                 if (value == 0)
                 {
                     _price = (double)TypeOfSize + (double)TypeOfToppingOne + (double)TypeOfToppingTwo + (double)TypeOfToppingThree + (double)TypeOfToppingFour + (double)TypeOfToppingFive;
-                   
+
                 }
             }
         }
-        //
+        */
 
-        /*
+        
         public double Price
         {
             get
@@ -146,7 +146,7 @@ namespace POS.Data
             {
                 _price = value;
             }
-        */
+        }
 
         //We need to set default value to ""
         private string _comment;
