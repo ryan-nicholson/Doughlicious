@@ -33,10 +33,10 @@ namespace POS.Data
 
         public DateTimeOffset? ModifiedOrderTime { get; set; }
 
-        [Required] // Where is price ever set?
-                   // public double Price { get; set; }
 
         private double _total = 0;
+
+        [Required] 
         public double Price
         {
             get
@@ -45,9 +45,14 @@ namespace POS.Data
             }
             set
             {
-                foreach (var pizza in Pizzas)
+                if (Pizzas != null)
                 {
-                    _total += pizza.Price;
+                    
+                    foreach (var pizza in Pizzas)
+                    {
+                        _total += pizza.Price;
+                    }
+                    
                 }
 
                 _total = value;
