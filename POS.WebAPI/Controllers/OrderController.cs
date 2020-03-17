@@ -52,20 +52,20 @@ namespace POS.WebAPI.Controllers
         }
 
         //[AcceptVerbs("GET")]
-        //[Route("api/Order/{orderId:int}")]
-        public IHttpActionResult GetOrderByOrderId(int orderId)
+        [Route("api/Order/OrderByOrderId")]
+        public IHttpActionResult GetOrderByOrderId(OrderDetail model)
         {
             var orderService = CreateOrderService();
-            var order = orderService.GetOrderById(orderId);
+            var order = orderService.GetOrderByOrderId(model.OrderId);
             return Ok(order);
         }
 
 
-        //[Route("api/Order/{customerId:int}")]
-        public IHttpActionResult GetOrderByCustomerId(int customerId)
+        [Route("api/Order/OrdersByCustomerId")]
+        public IHttpActionResult GetOrderByCustomerId(OrderDetail model)
         {
             var orderService = CreateOrderService();
-            var order = orderService.GetOrderByCustomer(customerId);
+            var order = orderService.GetOrdersByCustomerId(model.CustomerId);
             return Ok(order);
         }
 

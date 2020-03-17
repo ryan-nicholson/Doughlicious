@@ -208,7 +208,7 @@ namespace POS.Services
             }
         }
 
-        public OrderDetail GetOrderById(int orderId)
+        public OrderDetail GetOrderByOrderId(int orderId)
         {
             using (var dbContext = new ApplicationDbContext())
             {
@@ -250,16 +250,76 @@ namespace POS.Services
             }
         }
 
-        public OrderDetail GetOrderByCustomer(int customerId)
+        public IEnumerable<OrderListItem> GetOrdersByCustomerId(int customerId)
         {
+            using (var dbContext = new ApplicationDbContext())
+            {
+                var query = dbContext.OrderTable
+                    .Where(x => x.CustomerId == customerId)
+                    .Select(x => new OrderListItem
+                    {
+                        OrderId = x.OrderId,
+                        UserId = x.UserId,
+                        CustomerId = x.CustomerId,
+                        Pending = x.Pending,
+                        OrderTime = x.OrderTime,
+                        Price = x.Price
+                    });
+
+                   return query.ToArray();
+            }
+        }
+            /*
+            using (var dbContext = new ApplicationDbContext())
+            {
+                if (user.TypeUser == POSUser.UserTypes.Manager)
+                {
+                    // If user is a manager then they will be displayed all delivery orders that exist, showing the UserId for the user that placed the order
+                    var query = dbContext.OrderTable
+                        .Where(x => x.Delivery == true)
+                        .Select(x => new OrderListItem
+                        {
+                            OrderId = x.OrderId,
+                            UserId = x.UserId,
+                            CustomerId = x.CustomerId,
+                            Pending = x.Pending,
+                            OrderTime = x.OrderTime,
+                            Price = x.Price
+                        });
+
+                    return query.ToArray();
+                }
+                else
+                {
+                    // If user is an employee or customer they will be displayed all delivery orders that they have placed
+                    var query = dbContext.OrderTable
+                        .Where(x => x.UserId == _userId && x.Delivery == true)
+                        .Select(x => new OrderListItem
+                        {
+                            OrderId = x.OrderId,
+                            CustomerId = x.CustomerId,
+                            //Delivery = x.Delivery,
+                            Pending = x.Pending,
+                            OrderTime = x.OrderTime,
+                            Price = x.Price
+                        });
+
+                    return query.ToArray();
+                }
+            }
+        }
+             */
+
+
+        /*
             using (var dbContext = new ApplicationDbContext())
             {
                 if (user.TypeUser == POSUser.UserTypes.Manager)
                 {
                     var entity = dbContext.OrderTable
-                        .Single(x => x.CustomerId == customerId);
+                        .Select(x => x.CustomerId == customerId);
 
-                    return new OrderDetail
+                    return new OrderListItem
                     {
                         // If user is a manager they will be displayed the requested order's detailed information along with who took the order
                         OrderId = entity.OrderId,
@@ -291,7 +351,7 @@ namespace POS.Services
                 }
             }
         }
-
+        */
         public bool UpdateOrder(OrderEdit model)
         {
             using (var dbContext = new ApplicationDbContext())
