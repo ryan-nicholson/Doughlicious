@@ -91,9 +91,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IdentityModels.cs" />
-    <Compile Include="Migrations\202003161455306_InitialMigration.cs" />
-    <Compile Include="Migrations\202003161455306_InitialMigration.designer.cs">
-      <DependentUpon>202003161455306_InitialMigration.cs</DependentUpon>
+    <Compile Include="Migrations\202003161453225_InitialMigration.cs" />
+    <Compile Include="Migrations\202003161453225_InitialMigration.designer.cs">
+      <DependentUpon>202003161453225_InitialMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Order.cs" />
@@ -201,8 +201,8 @@
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202003161455306_InitialMigration.resx">
-      <DependentUpon>202003161455306_InitialMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202003161453225_InitialMigration.resx">
+      <DependentUpon>202003161453225_InitialMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

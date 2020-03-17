@@ -51,9 +51,13 @@ namespace POS.Data
             }
             set
             {
-                if (value == null)
+                if (value != null)
                 {
-                    _typeOfToppingOne = Pizza.ToppingType.none; 
+                    _typeOfToppingOne = (Pizza.ToppingType)value;
+                }
+                else
+                {
+                    _typeOfToppingOne = Pizza.ToppingType.none;
                 }
             }
         }

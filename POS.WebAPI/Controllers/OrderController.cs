@@ -20,10 +20,9 @@ namespace POS.WebAPI.Controllers
         {
             using (var dbContext = new ApplicationDbContext())
             {
-                var query = dbContext.UserTable
-                   .Find(Guid.Parse(User.Identity.GetUserId()));
+                Guid x = Guid.Parse(User.Identity.GetUserId());
+                var query = dbContext.UserTable.Single(e => e.UserGuid == x);
                 var userId = query.UserId;
-
                 return userId;
             }
         }
