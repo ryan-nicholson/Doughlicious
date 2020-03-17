@@ -12,9 +12,17 @@ namespace POS.Data
     public class Pizza
     {
         public enum CrustType { pan, handtossed, thin }
-        public enum ToppingType { pepperoni = 2, sausage = 2, ham = 2, bacon = 2, chicken = 2, mushrooms = 1, onions = 1, tomatoes = 1, blackOlives = 1, bellPeppers = 1, jalapenos = 1, extraCheese = 1, none = 0 }
+        public enum ToppingType { pepperoni, sausage, ham, bacon, chicken, mushrooms, onions, tomatoes, blackOlives, bellPeppers, jalapenos, extraCheese, none}
         public enum SauceType { red, white, pesto }
-        public enum SizeType { S = 8, M = 10, L = 12, XL = 14 }
+        public enum SizeType { S, M, L, XL}
+
+        public static Dictionary<SizeType, double> Cost = new Dictionary<SizeType, double>
+    {
+         {SizeType.XL, 20},
+         {SizeType.L, 16},
+         {SizeType.M, 12},
+         {SizeType.S, 8},
+    };
 
         [Key]
         public int PizzaId { get; set; }
