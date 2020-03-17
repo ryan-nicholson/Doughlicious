@@ -45,11 +45,12 @@ namespace POS.Data
             }
             set
             {
+                /*
                 foreach (var pizza in Pizzas)
                 {
                     _total += pizza.Price;
                 }
-
+                */
                 _total = value;
             }
         }
