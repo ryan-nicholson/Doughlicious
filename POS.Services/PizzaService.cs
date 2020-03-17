@@ -45,25 +45,19 @@ namespace POS.Services
                 return ctx.SaveChanges() == 1;
             }
         }
-        public IEnumerable<Pizza> GetPizzas()
+        public IEnumerable<PizzaListItem> GetPizzas()
         {
             using (var ctx = new ApplicationDbContext())
             {
-                var query =
-                    ctx
-                        .PizzaTable//EAC: commented below out so it pulls all pizzas
-                                   //.Select(
-                                   //    e =>
-                                   //        new PizzaListItem
-                                   //        {
-                                   //            UserId = e.UserId,
-                                   //            PizzaId = e.PizzaId,
-                                   //            CustomerId = e.CustomerId,
-                                   //            OrderId = e.OrderId,
-                                   //            CreatedUtc = e.CreatedUtc
-                                   //        }
-                                   //)
-                        ;
+                var query = ctx.PizzaTable
+                    .Select(e => new PizzaListItem
+                    {
+                        UserId = e.UserId,
+                        PizzaId = e.PizzaId,
+                        CustomerId = e.CustomerId,
+                        OrderId = e.OrderId,
+                        CreatedUtc = e.CreatedUtc
+                    });
 
                 return query.ToArray();
             }

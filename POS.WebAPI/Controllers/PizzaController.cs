@@ -25,7 +25,7 @@ namespace POS.WebAPI.Controllers
             }
         }
         [HttpGet]
-        public IHttpActionResult Get(string getall)
+        public IHttpActionResult Get()
         {
             PizzaService pizzaService = CreatePizzaService();
             var pizzas = pizzaService.GetPizzas();
