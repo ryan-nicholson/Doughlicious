@@ -55,7 +55,7 @@ namespace POS.Data
                     
                 }
 
-                _total = value;
+                //_total = value;
             }
         }
     }

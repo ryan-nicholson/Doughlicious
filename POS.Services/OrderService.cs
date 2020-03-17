@@ -208,7 +208,7 @@ namespace POS.Services
             }
         }
 
-        public OrderDetail GetOrderById(int orderId)
+        public OrderDetail GetOrderByOrderId(int orderId)
         {
             using (var dbContext = new ApplicationDbContext())
             {
@@ -223,7 +223,7 @@ namespace POS.Services
                         OrderId = entity.OrderId,
                         UserId = entity.UserId,
                         CustomerId = entity.CustomerId,
-                        Pizzas = entity.Pizzas,
+                        //Pizzas = entity.Pizzas,
                         Delivery = entity.Delivery,
                         Pending = entity.Pending,
                         OrderTime = entity.OrderTime,
@@ -236,62 +236,42 @@ namespace POS.Services
                     var entity = dbContext.OrderTable
                         .Single(x => x.OrderId == orderId && x.UserId == _userId);
 
-                    return new OrderDetail
+                    var order = new OrderDetail
                     {
                         OrderId = entity.OrderId,
                         CustomerId = entity.CustomerId,
-                        Pizzas = entity.Pizzas,
+                        //Pizzas = entity.Pizzas,
                         Delivery = entity.Delivery,
                         Pending = entity.Pending,
                         OrderTime = entity.OrderTime,
                         Price = entity.Price
                     };
+
+                    return order;
                 }
             }
         }
 
-        public OrderDetail GetOrderByCustomer(int customerId)
+        public IEnumerable<OrderListItem> GetOrdersByCustomerId(int customerId)
         {
             using (var dbContext = new ApplicationDbContext())
             {
-                if (user.TypeUser == POSUser.UserTypes.Manager)
-                {
-                    var entity = dbContext.OrderTable
-                        .Single(x => x.CustomerId == customerId);
-
-                    return new OrderDetail
+                var query = dbContext.OrderTable
+                    .Where(x => x.CustomerId == customerId)
+                    .Select(x => new OrderListItem
                     {
-                        // If user is a manager they will be displayed the requested order's detailed information along with who took the order
-                        OrderId = entity.OrderId,
-                        UserId = entity.UserId,
-                        CustomerId = entity.CustomerId,
-                        Pizzas = entity.Pizzas,
-                        Delivery = entity.Delivery,
-                        Pending = entity.Pending,
-                        OrderTime = entity.OrderTime,
-                        Price = entity.Price
-                    };
-                }
-                else
-                {
-                    // If user is a customer or employee they will be displayed the requested order's detailed information only if it is an order they took
-                    var entity = dbContext.OrderTable
-                        .Single(x => x.CustomerId == customerId && x.UserId == _userId);
+                        OrderId = x.OrderId,
+                        UserId = x.UserId,
+                        CustomerId = x.CustomerId,
+                        Pending = x.Pending,
+                        OrderTime = x.OrderTime,
+                        Price = x.Price
+                    });
 
-                    return new OrderDetail
-                    {
-                        OrderId = entity.OrderId,
-                        CustomerId = entity.CustomerId,
-                        Pizzas = entity.Pizzas,
-                        Delivery = entity.Delivery,
-                        Pending = entity.Pending,
-                        OrderTime = entity.OrderTime,
-                        Price = entity.Price
-                    };
-                }
+                   return query.ToArray();
             }
         }
-
+           
         public bool UpdateOrder(OrderEdit model)
         {
             using (var dbContext = new ApplicationDbContext())
