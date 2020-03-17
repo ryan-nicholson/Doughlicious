@@ -51,7 +51,8 @@ namespace POS.WebAPI.Controllers
             return Ok(orders);
         }
 
-        [Route("api/Order/{orderId}")]
+        [AcceptVerbs("GET")]
+        [Route("api/Order/{orderId:int}")]
         public IHttpActionResult GetOrderByOrderId(int orderId)
         {
             var orderService = CreateOrderService();
@@ -59,7 +60,8 @@ namespace POS.WebAPI.Controllers
             return Ok(order);
         }
 
-        [Route("api/Order/{customerId}")]
+        
+        [Route("api/Order/{customerId:int}")]
         public IHttpActionResult GetOrderByCustomerId(int customerId)
         {
             var orderService = CreateOrderService();
