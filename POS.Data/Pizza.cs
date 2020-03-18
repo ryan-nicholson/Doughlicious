@@ -19,9 +19,9 @@ namespace POS.Data
         [Key]
         public int PizzaId { get; set; }
 
-        [ForeignKey(nameof(Order))]
         public int OrderId { get; set; }
-        public virtual Order Order { get; set; }
+        //[ForeignKey(nameof(OrderId))]
+        //public virtual Order Order { get; set; }
         [Required]//EAC: is this required since it will be autoset?
         public int UserId { get; set; }
         [Required]
