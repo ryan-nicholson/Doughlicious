@@ -16,11 +16,11 @@ Doughlicious is a platform for users to place orders for pizzas that are then re
 
 ## How does it work?
 
-Doughlicious takes advantage of the builtin ApplicationUser in .net framework, and ties that to our customized user class, then differentiates the users by type.  Based on type the User will have access to different functionalities, whether that be adding employees, creating and editing orders, creating or deleting pizzas and more.
+Doughlicious takes advantage of the built-in ApplicationUser in .net framework, and ties that to our customized user class, then differentiates the users by type.  Based on type the User will have access to different functionalities, whether that be adding employees, creating and editing orders, creating or deleting pizzas and more.
 
 ## But who is it for?
 
-This program is designed to be a magic bullet for the small business owner running a pizza shop.  It wraps together a point of sale system, online order system, customer database and employee management system into one convenient package.  
+This program is designed to be a magic bullet for the small business owner operating a pizza shop.  It wraps together a point of sale system, online order system, customer database and employee management system into one convenient package.  Our program allows for optimized productivity by improving order accuracy, tracking trends and collects historical information of customers, pizzas, users and orders.    
 
 ## Contact Us!
 
