@@ -11,6 +11,11 @@ namespace POS.Models.OrderModels
     {
         public int OrderId { get; set; }
 
+        
+        public int UserId { get; set; }
+
+        public int CustomerId { get; set; }
+
         // Do we want to show the pizzas?
         //public ICollection<Pizza> Pizzas { get; set; }
 
@@ -18,12 +23,7 @@ namespace POS.Models.OrderModels
 
         public DateTimeOffset OrderTime { get; set; }
 
-        public int UserId { get; set; }
-
-        public int CustomerId { get; set; }
-
         public double Price { get; set; }
-
 
         public bool Delivery { get; set; }
 

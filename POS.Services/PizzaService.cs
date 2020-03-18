@@ -17,7 +17,7 @@ namespace POS.Services
         {
             _userId = userId;
         }
-
+        
         public bool CreatePizza(PizzaCreate model)
         {
             var entity =
@@ -45,7 +45,7 @@ namespace POS.Services
                 return ctx.SaveChanges() == 1;
             }
         }
-        public IEnumerable<PizzaListItem> GetPizzas()
+        public IEnumerable<PizzaListItem> GetAllPizzas()
         {
             using (var ctx = new ApplicationDbContext())
             {
@@ -93,36 +93,26 @@ namespace POS.Services
                     };
             }
         }
+        
         //Get Pizza by User - EAC
-        public IEnumerable<Pizza> GetPizzasByUserId(int userId)
+        public IEnumerable<PizzaListItem> GetPizzasByUserId(int userId)
         {
             using (var ctx = new ApplicationDbContext())
             {
-                var entity =
-                    ctx
-                        .PizzaTable
+                var entity = ctx.PizzaTable
                         .Where(e => e.UserId == userId)
-                        .Select(e => new Pizza
+                        .Select(e => new PizzaListItem
                         {
-                            PizzaId = e.PizzaId,
-                            OrderId = e.OrderId,
                             UserId = e.UserId,
+                            PizzaId = e.PizzaId,
                             CustomerId = e.CustomerId,
-                            Cheese = e.Cheese,
-                            TypeOfCrust = e.TypeOfCrust,
-                            TypeOfSauce = e.TypeOfSauce,
-                            TypeOfSize = e.TypeOfSize,
-                            TypeOfToppingOne = e.TypeOfToppingOne,
-                            TypeOfToppingTwo = e.TypeOfToppingTwo,
-                            TypeOfToppingThree = e.TypeOfToppingThree,
-                            TypeOfToppingFour = e.TypeOfToppingFour,
-                            TypeOfToppingFive = e.TypeOfToppingFive,
-                            Comment = e.Comment
+                            OrderId = e.OrderId,
+                            CreatedUtc = e.CreatedUtc
                         });
-                return entity;
+                return entity.ToArray();
             }
         }
-
+        
         //Update/Edit Pizzas -EAC
 
         public bool UpdatePizza(PizzaEdit model)
