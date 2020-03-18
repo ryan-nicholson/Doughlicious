@@ -1,4 +1,14 @@
+
+
+
 # Doughlicious
+
+## Table of Contents
+
+* [What is Doughlicious?](#what-is-doughlicious?)
+* [How does it work?](#how-does-it-work?)
+* [But who is it for?](#but-who-is-it-for?)
+* [Contact Us!](#contact-us!)
 
 ## What is #Doughlicious?
 
@@ -10,4 +20,13 @@ Doughlicious takes advantage of the builtin ApplicationUser in .net framework, a
 
 ## But who is it for?
 
-This program is designed to be a magic bullet for the small business owner running a pizza shop.  It wraps together a point of sale system, online order system, customer database and employee management system into one convenient package.
+This program is designed to be a magic bullet for the small business owner running a pizza shop.  It wraps together a point of sale system, online order system, customer database and employee management system into one convenient package.  
+
+## Contact Us!
+
+Email us with any questions at: 
+<ul>
+<li>spdwyer06@gmail.com</li>
+<li>arthurrobinsoniii3@gmail.com</li>
+<li>rbnich2012@gmail.com</li>
+</ul>
