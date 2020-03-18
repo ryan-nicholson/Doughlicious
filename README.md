@@ -5,10 +5,10 @@
 
 ## Table of Contents
 
-* [What is Doughlicious?](#what-is-doughlicious?)
-* [How does it work?](#how-does-it-work?)
-* [But who is it for?](#but-who-is-it-for?)
-* [Contact Us!](#contact-us!)
+* What is Doughlicious?
+* How does it work?
+* But who is it for?
+* Contact Us!
 
 ## What is #Doughlicious?
 
