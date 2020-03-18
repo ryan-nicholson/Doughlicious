@@ -22,6 +22,30 @@ Doughlicious takes advantage of the built-in ApplicationUser in .net framework, 
 
 This program is designed to be a magic bullet for the small business owner operating a pizza shop.  It wraps together a point of sale system, online order system, customer database and employee management system into one convenient package.  Our program allows for optimized productivity by improving order accuracy, tracking trends and collects historical information of customers, pizzas, users and orders.    
 
+## Getting Started
+
+The following will allow you to get a local copy of the program.
+
+
+### Prerequisites
+
+You will need to install the following first.
+* Microsoft Visual Studio
+
+Microsoft Visual Studio install at [https://visualstudio.microsoft.com/](https://visualstudio.microsoft.com/) 
+
+
+### Installation
+
+1. Clone the repo at [https://github.com/artythree/Doughlicious.git](https://github.com/artythree/Doughlicious.git)
+2. Install Nuget Packages for Solution
+```sh
+Microsoft.AspNet.Identity.EntityFramework
+Microsoft.AspNet.Identity.Owin (Data Layer Only)
+
+```
+
+
 ## Contact Us!
 
 Email us with any questions at: 
@@ -31,3 +55,7 @@ Email us with any questions at:
 <li>rbnich2012@gmail.com</li>
 </ul>
 
+## Acknowledgements
+* [README Template](https://github.com/othneildrew/Best-README-Template)
+* [Microsoft DOCS](https://docs.microsoft.com/en-us/aspnet/web-api/)
+* [stack overflow](https://stackoverflow.com/questions/21856218/understanding-foreignkey-attribute-in-entity-framework-code-first)
