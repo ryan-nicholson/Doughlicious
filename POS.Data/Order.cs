@@ -14,14 +14,14 @@ namespace POS.Data
         public int OrderId { get; set; }
 
 
-        [ForeignKey(nameof(User))]
         public int UserId { get; set; }
+        [ForeignKey(nameof(UserId))]
         public virtual POSUser User { get; set; }
 
         [Required]
         public int CustomerId { get; set; }
 
-        public virtual ICollection<Pizza> Pizzas { get; set; }
+        public virtual ICollection<Pizza> Pizzas { get; set; } = new List<Pizza>();
 
         [Required]
         public bool Delivery { get; set; }
@@ -36,24 +36,25 @@ namespace POS.Data
 
         private double _total = 0;
 
-        [Required] 
+        [Required]
         public double Price
         {
             get
             {
+                foreach (var pizza in Pizzas)
+                {
+                    _total += pizza.Price;
+                }
                 return _total;
             }
             set
             {
-                if (Pizzas != null)
-                {
-                    
-                    foreach (var pizza in Pizzas)
-                    {
-                        _total += pizza.Price;
-                    }
-                    
-                }
+                //if (Pizzas != null)
+                //{
+
+
+
+                // }
 
                 //_total = value;
             }

@@ -95,6 +95,10 @@
     <Compile Include="Migrations\202003161453225_InitialMigration.designer.cs">
       <DependentUpon>202003161453225_InitialMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003181347358_RemovedOrderForeignKeyFromPizzaClass.cs" />
+    <Compile Include="Migrations\202003181347358_RemovedOrderForeignKeyFromPizzaClass.designer.cs">
+      <DependentUpon>202003181347358_RemovedOrderForeignKeyFromPizzaClass.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Pizza.cs" />
@@ -203,6 +207,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202003161453225_InitialMigration.resx">
       <DependentUpon>202003161453225_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003181347358_RemovedOrderForeignKeyFromPizzaClass.resx">
+      <DependentUpon>202003181347358_RemovedOrderForeignKeyFromPizzaClass.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

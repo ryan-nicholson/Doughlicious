@@ -39,7 +39,7 @@ namespace POS.WebAPI.Controllers
             var pizza = pizzaService.GetPizzaByPizzaId(pizzaId.PizzaId);
             return Ok(pizza);
         }
-
+        
         [Route("api/Pizza/GetPizzasByUserId")]
         public IHttpActionResult GetPizzasByUserId()
         {

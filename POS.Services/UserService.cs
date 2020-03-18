@@ -23,20 +23,35 @@ namespace POS.Services
             _userGuid = userGuid;
         }
 
-        public bool CreatePOSUser( string email)
+        public bool CreatePOSUser(string email)
         {
-            var entity = new POSUser()
-            {
-                UserGuid = GetGuid(email),
-                TypeUser = POSUser.UserTypes.Customer,
-                Name = GetNameByGuid(email),
-                Email = GetEmailByGuid(email)
-            };
-
             using (var ctx = new ApplicationDbContext())
             {
-                ctx.UserTable.Add(entity);
-                return ctx.SaveChanges() == 1;
+
+                int x = 0;
+                foreach (var query in ctx.UserTable)
+                {
+                    if (query.Email == email)
+                    {
+                        x += 1;
+                    }
+                }
+
+                if (x == 0)
+                {
+                    var entity = new POSUser()
+                    {
+                        UserGuid = GetGuid(email),
+                        TypeUser = POSUser.UserTypes.Customer,
+                        Name = GetNameByGuid(email),
+                        Email = GetEmailByGuid(email)
+                    };
+                    {
+                        ctx.UserTable.Add(entity);
+                        return ctx.SaveChanges() == 1;
+                    }
+                }
+                return false;
             }
         }
 
@@ -100,13 +115,14 @@ namespace POS.Services
 
                                 UserId = e.UserId,
                                 Name = e.Name,
-                                UserGuid = user.UserGuid
-
+                                UserGuid = user.UserGuid,
+                                Email = e.Email
+                                
                             }
                             
                         ) ; 
 
-                return query.ToArray()[user.UserId];
+                return query.ToArray()[user.UserId -1];
             }
         }
         public IEnumerable<UserListItem> GetUsersByRole( POSUser.UserTypes type)
@@ -204,6 +220,7 @@ namespace POS.Services
                 if (usertype == POSUser.UserTypes.Manager)
                 {
                     query.TypeUser = type;
+                    ctx.SaveChanges();
                 }
 
                 return query;
@@ -252,6 +269,7 @@ namespace POS.Services
                 if (usertype == POSUser.UserTypes.Manager)
                 {
                     ctx.UserTable.Remove(query);
+                    ctx.SaveChanges();
                 }
                 return usertype == POSUser.UserTypes.Manager;
             }

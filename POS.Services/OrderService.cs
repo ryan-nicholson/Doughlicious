@@ -1,8 +1,10 @@
 ﻿using POS.Data;
 using POS.Models.OrderModels;
+using POS.Models.PizzaModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -207,7 +209,7 @@ namespace POS.Services
                 }
             }
         }
-
+        
         public OrderDetail GetOrderByOrderId(int orderId)
         {
             using (var dbContext = new ApplicationDbContext())
@@ -236,11 +238,27 @@ namespace POS.Services
                     var entity = dbContext.OrderTable
                         .Single(x => x.OrderId == orderId && x.UserId == _userId);
 
+                    // Create PizzaListItem
+                    //var pizzaList = new PizzaListItem();
+                    var pizzaList = new List<PizzaListItem>();
+
+                    foreach (var pizza in entity.Pizzas)
+                    {
+                        PizzaListItem orderPizza = new PizzaListItem()
+                        {
+                            PizzaId = pizza.PizzaId
+
+                        };
+
+                        pizzaList.Add(orderPizza);
+                    }
+
                     var order = new OrderDetail
                     {
                         OrderId = entity.OrderId,
                         CustomerId = entity.CustomerId,
                         //Pizzas = entity.Pizzas,
+                        PizzaList = pizzaList,
                         Delivery = entity.Delivery,
                         Pending = entity.Pending,
                         OrderTime = entity.OrderTime,

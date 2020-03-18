@@ -1,4 +1,5 @@
 ﻿using POS.Data;
+using POS.Models.PizzaModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace POS.Models.OrderModels
 
         public int CustomerId { get; set; }
 
-        public ICollection<Pizza> Pizzas { get; set; }
+        public List<PizzaListItem> PizzaList { get; set; }
       
         public bool Delivery { get; set; }
 

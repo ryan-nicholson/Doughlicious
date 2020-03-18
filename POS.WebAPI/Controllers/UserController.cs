@@ -54,7 +54,7 @@ namespace POS.WebAPI.Controllers
 
             var newUser = service.CreatePOSUser(model.Email);
 
-            if (!service.CreatePOSUser(model.Email))
+            if (!newUser)
 
                 return InternalServerError();
 
@@ -68,9 +68,8 @@ namespace POS.WebAPI.Controllers
             {
                 UserService userService = CreateUserService();
                 var user = userService.ChangeUserType(userEdit.Email, userEdit.userType);
-                return Ok(user);
+                return Ok();
             }
-
             return BadRequest();
         }
         [HttpDelete]
