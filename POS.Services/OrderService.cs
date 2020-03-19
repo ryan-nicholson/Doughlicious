@@ -31,12 +31,12 @@ namespace POS.Services
                 if (dbContext.UserTable.Find(_userId).TypeUser == POSUser.UserTypes.Customer)
                 {
                     {
+                        // If the user is a customer the Customer Id will be the same as their User Id
                         order.UserId = _userId;
                         order.CustomerId = _userId;
                         order.Delivery = model.Delivery;
                         order.Pending = true;
                         order.OrderTime = DateTimeOffset.Now;
-                        //order.Price = model.Price;
                     };
                 }
                 else
@@ -47,7 +47,6 @@ namespace POS.Services
                         order.Delivery = model.Delivery;
                         order.Pending = true;
                         order.OrderTime = DateTimeOffset.Now;
-                        //order.Price = model.Price;
                     };
                 }
             };
@@ -102,30 +101,6 @@ namespace POS.Services
             }
         }
 
-        /*
-        public IEnumerable<OrderListItem> GetAllOrders()
-        {
-            using (var dbContext = new ApplicationDbContext())
-            {
-                var query = dbContext.OrderTable
-                      .Where(x => x.UserId == _userId)
-                      .Select(x => new OrderListItem
-                      {
-                          OrderId = x.OrderId,
-                          CustomerId = x.CustomerId,
-                          // Do we want to show pizzas?
-                          //Pizzas = x.Pizzas,
-                          Delivery = x.Delivery,
-                          Pending = x.Pending,
-                          OrderTime = x.OrderTime,
-                          Price = x.Price
-                      });
-
-                return query.ToArray();
-            }
-        }
-        */
-
         // Get all pending orders for user unless manager
         public IEnumerable<OrderListItem> GetAllPendingOrders()
         {
@@ -158,7 +133,6 @@ namespace POS.Services
                             OrderId = x.OrderId,
                             CustomerId = x.CustomerId,
                             Delivery = x.Delivery,
-                            //Pending = x.Pending,
                             OrderTime = x.OrderTime,
                             Price = x.Price
                         });
@@ -199,7 +173,6 @@ namespace POS.Services
                         {
                             OrderId = x.OrderId,
                             CustomerId = x.CustomerId,
-                            //Delivery = x.Delivery,
                             Pending = x.Pending,
                             OrderTime = x.OrderTime,
                             Price = x.Price
@@ -212,35 +185,14 @@ namespace POS.Services
         
         public OrderDetail GetOrderByOrderId(int orderId)
         {
+            var pizzaList = new List<PizzaListItem>();
+
             using (var dbContext = new ApplicationDbContext())
             {
                 if (user.TypeUser == POSUser.UserTypes.Manager)
                 {
                     var entity = dbContext.OrderTable
                         .Single(x => x.OrderId == orderId);
-
-                    return new OrderDetail
-                    {
-                        // If user is a manager they will be displayed the requested order's detailed information along with who took the order
-                        OrderId = entity.OrderId,
-                        UserId = entity.UserId,
-                        CustomerId = entity.CustomerId,
-                        //Pizzas = entity.Pizzas,
-                        Delivery = entity.Delivery,
-                        Pending = entity.Pending,
-                        OrderTime = entity.OrderTime,
-                        Price = entity.Price
-                    };
-                }
-                else
-                {
-                    // If user is a customer or employee they will be displayed the requested order's detailed information only if it is an order they took
-                    var entity = dbContext.OrderTable
-                        .Single(x => x.OrderId == orderId && x.UserId == _userId);
-
-                    // Create PizzaListItem
-                    //var pizzaList = new PizzaListItem();
-                    var pizzaList = new List<PizzaListItem>();
 
                     foreach (var pizza in entity.Pizzas)
                     {
@@ -253,19 +205,46 @@ namespace POS.Services
                         pizzaList.Add(orderPizza);
                     }
 
-                    var order = new OrderDetail
+                    return new OrderDetail
                     {
+                        // If user is a manager they will be displayed the requested order's detailed information along with who took the order
                         OrderId = entity.OrderId,
+                        UserId = entity.UserId,
                         CustomerId = entity.CustomerId,
-                        //Pizzas = entity.Pizzas,
                         PizzaList = pizzaList,
                         Delivery = entity.Delivery,
                         Pending = entity.Pending,
                         OrderTime = entity.OrderTime,
                         Price = entity.Price
                     };
+                }
+                else
+                {
+                    // If user is a customer or employee they will be displayed the requested order's detailed information only if it is an order they took
+                    var entity = dbContext.OrderTable
+                        .Single(x => x.OrderId == orderId && x.UserId == _userId);
 
-                    return order;
+                    foreach (var pizza in entity.Pizzas)
+                    {
+                        PizzaListItem orderPizza = new PizzaListItem()
+                        {
+                            PizzaId = pizza.PizzaId
+
+                        };
+
+                        pizzaList.Add(orderPizza);
+                    }
+
+                    return new OrderDetail
+                    {
+                        OrderId = entity.OrderId,
+                        CustomerId = entity.CustomerId,
+                        PizzaList = pizzaList,
+                        Delivery = entity.Delivery,
+                        Pending = entity.Pending,
+                        OrderTime = entity.OrderTime,
+                        Price = entity.Price
+                    };
                 }
             }
         }

@@ -47,17 +47,7 @@ namespace POS.Data
                 }
                 return _total;
             }
-            set
-            {
-                //if (Pizzas != null)
-                //{
-
-
-
-                // }
-
-                //_total = value;
-            }
+            set { }
         }
     }
 }

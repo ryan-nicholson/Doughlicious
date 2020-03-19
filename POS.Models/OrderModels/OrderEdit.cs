@@ -11,7 +11,6 @@ namespace POS.Models.OrderModels
     {
         public int OrderId { get; set; }
 
-        // ?
         public ICollection<Pizza> Pizzas { get; set; }
 
         public bool Delivery { get; set; }
